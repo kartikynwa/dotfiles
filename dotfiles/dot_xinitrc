@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# xrandr --setprovideroutputsource NVIDIA-0 modesetting
+# xrandr --auto
+xrdb -load ~/.Xresources
+xset -b # turn off beeping
+setxkbmap -option ctrl:nocaps
+exec dbus-run-session i3
