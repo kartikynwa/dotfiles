@@ -1,5 +1,7 @@
 # Hello.
 
+# NEEDS TO BE UPDATED. DO NOT READ.
+
 ## Screenshots
 
 ![screenshot_1](screenshots/screenshot_1.png "Naked")
