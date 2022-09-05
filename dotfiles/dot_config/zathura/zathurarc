@@ -1,0 +1,16 @@
+set window-title-basename true
+
+set guioptions ""
+set zoom-step 5
+set scroll-step 20
+
+set recolor-darkcolor "#3c3836"
+set recolor-lightcolor "#f9f5d7"
+
+map i zoom in
+map u zoom out
+map K zoom in
+map J zoom out
+map <S-Up> zoom in
+map <S-Down> zoom out
+map I recolor

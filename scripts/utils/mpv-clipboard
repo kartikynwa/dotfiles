@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+if [ -z "$WAYLAND_DISPLAY" ]; then
+  url=$( xsel )
+else
+  url=$( wl-paste )
+fi
+
+echo "$url"
+
+if [ -z "$url" ]; then
+  notify-send "mpv-clipboard" "Clipboard is empty."
+else
+  notify-send "mpv-clipboard" "${url}"
+  mpv --force-window=immediate "${url}"
+fi

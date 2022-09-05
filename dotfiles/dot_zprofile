@@ -1,0 +1,15 @@
+# Environment variables
+export EDITOR=vim
+export GPODDER_HOME=${HOME}/.config/gPodder
+export GPODDER_DOWNLOAD_DIR=${HOME}/dumbshit/podcasts
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
+# export QT_STYLE_OVERRIDE=qt5ct
+export DOOMDIR=${HOME}/.config/doom.d
+
+# rustup
+export RUSTUP_HOME=$HOME/.local/rustup
+export CARGO_HOME=$HOME/.local/cargo
+
+if [[ -z $TMUX ]] && [[ -z $SSH_CLIENT ]] && [[ -z $SSH2_CLIENT ]] && [[ "$TTY" = "/dev/tty1" ]]; then
+  startx
+fi

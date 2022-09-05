@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+set -e
+
+station=wlp0s20f3
+ssid="@MAr_B@r!"
+
+if ! iwctl station "$station" connect "$ssid"; then
+  iwctl station "$station" scan on
+  sleep 5s
+  iwctl station "$station" connect "$ssid"
+  iwctl station "$station" scan off
+fi

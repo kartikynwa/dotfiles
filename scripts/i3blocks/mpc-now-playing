@@ -1,0 +1,84 @@
+#!/bin/env sh
+
+maxlen=40
+
+# Check if mpc/mpd is installed
+! command -v mpc 1> /dev/null && echo "mpc is not installed." && exit
+
+format_string='[["%title%"][ by [[%artist%]|[%albumartist%]]]]|[%file%]'
+
+# Store mpc output
+set -f
+IFS='
+'
+set -- $(mpc -f "${format_string}")
+set +f
+
+# Exit if mpd is not running
+if [ -z "$1" ]
+then
+  echo "mpd down"
+  exit
+fi
+
+# Exit if queue is empty
+if [ -z "$2" ]
+then
+  echo "mpd queue empty"
+  exit
+fi
+
+# Check if mpd is updating while the queue is empty
+case "$1" in
+  Updating*)
+    echo "<updating db>"
+    exit 0
+    ;;
+esac
+
+# Check if ashuffle is running
+if pgrep -x ashuffle > /dev/null 2>&1
+then
+  ashuffle=" <ash>"
+fi
+ 
+# Splice output if it is too long
+if [ ${#1} -ge ${maxlen} ]
+then
+  song_info="$( printf "%.${maxlen}s..." "$1" )"
+else
+  song_info="$1"
+fi
+
+# Show `|` if paused, `>` if playing
+case "$2" in
+  \[pl*)
+    symbol=">"
+    ;;
+  *)
+    symbol="|"
+    ;;
+esac
+
+time=$( echo "$2" | awk '{print $3;}' )
+
+case "$3" in
+  Updating*)
+    updating=" <updating>"
+    status_line="$4"
+    ;;
+  *)
+    status_line="$3"
+    ;;
+esac
+
+# Get mpd's volume
+vol="${status_line%%  *}"
+vol="${vol#*:}"
+vol="${vol# }"
+
+# Echo the crap of out it
+if [ -n "$song_info" ]
+then
+  echo "${symbol} [${time}] ${song_info} <${vol}>${ashuffle}${updating}"
+fi

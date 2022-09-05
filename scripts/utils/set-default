@@ -1,0 +1,47 @@
+#!/usr/bin/env sh
+
+help() {
+  printf "USAGE: ./xdg-set-default <filename>\n"
+}
+
+if [ -z "$1" ]
+then
+  help
+  exit 1
+fi
+
+filetype=$( xdg-mime query filetype "$1" )
+
+if [ -z "$filetype" ]
+then
+  printf "Couldn't query filetype.\n"
+  return 1
+fi
+
+default=$( xdg-mime query default "$filetype" )
+if [ -z "$default" ]
+then
+  default="None"
+fi
+
+printf "Filename:\t$( basename "$1" )\n"
+printf "Filetype:\t${filetype}\n"
+printf "Current default:\t${default}\n"
+read -p "Press Enter to set the default application." uselessvar
+
+application=$( fd -edesktop . /usr/share/applications -x basename {} | \
+  sort | fzf --prompt "${filetype} > " )
+
+if [ -z "$application" ]
+then
+  printf "Default application unchanged.\n"
+  exit 0
+fi
+
+xdg-mime default "$application" "$filetype"
+if [ $? -eq 0 ]
+then
+  printf "${filetype}: Default changed to ${application}\n"
+else
+  printf "${filetype}: Couldn't change default to ${application}\n"
+fi

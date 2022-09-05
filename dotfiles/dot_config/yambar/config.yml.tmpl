@@ -1,0 +1,122 @@
+# Typical laptop setup, with wifi, brightness, battery etc, for
+# i3/Sway.
+
+# fonts we'll be re-using here and there
+
+std_underline: &std_underline {underline: { size: 2, color: d79921ff}}
+separator: &separator {string: {text: " | ", foreground: 928374ff}}
+
+# This is THE bar configuration
+bar:
+  height: 20
+  location: top
+
+  # Default font
+  font: DejaVuSansMono Nerd Font Mono:pixelsize=14
+
+  foreground: ebdbb2ff
+  background: 282828ff
+
+  left:
+    - i3:
+        sort: ascending
+        anchors:
+          - string: &i3_common {margin: 5, on-click: "i3-msg --quiet workspace {name}"}
+          - string: &default {<<: *i3_common, text: "{name}"}
+          - focused: &focused
+              deco: {stack: [background: {color: 076678ff}, <<: *std_underline]}
+          - urgent: &urgent
+              deco: {background: {color: cc421dff}}
+        content:
+          "":
+            map:
+              tag: state
+              values:
+                focused:   {string: {<<: [*default, *focused]}}
+                unfocused: {string: {<<: *default}}
+                invisible: {string: {<<: [*default]}}
+                urgent:    {string: {<<: [*default, *urgent]}}
+          current:
+            map:
+              tag: mode
+              default: {string: {<<: *urgent, margin: 5, text: "{mode}"}}
+              values:
+                default:
+                  empty: {}
+
+  right:
+    - mpd:
+        host: /var/run/user/1000/mpd.socket
+        anchors:
+          list: &artist_album_title
+            items:
+              - map:
+                  tag: state
+                  values:
+                    playing: {string: {text: "> "}}
+                    paused: {string: {text: "| "}}
+              - string: {text: "\"{title}\" by {artist}", max: 40}
+              - string: {text: " [{volume}%]"}
+        content:
+          map:
+            tag: state
+            values:
+              offline: {string: {text: "mpd down"}}
+              stopped: {string: {text: stopped}}
+              paused: {list: *artist_album_title}
+              playing: {list: *artist_album_title}
+    - label:
+        content: *separator
+    - script:
+        path: {{ .chezmoi.workingTree }}/scripts/yambar_scripts/wg0.sh
+        args: []
+        content: {string: {text: "{status}"}}
+    - label:
+        content: *separator
+    - script:
+        path: {{ .chezmoi.workingTree }}/scripts/yambar_scripts/arr.sh
+        args: []
+        content: {string: {text: "{status}"}}
+    - label:
+        content: *separator
+    - alsa:
+        card: "hw:0"
+        mixer: Master
+        content:
+          map:
+            tag: muted
+            values:
+              true:  {string: {text: "{volume}% muted"}}
+              false: {string: {text: "{volume}%"}}
+    - label:
+        content: *separator
+    - network:
+        name: wlp0s20f3
+        content:
+          - string: {text: "{ssid}"}
+    - label:
+        content: *separator
+    - clock:
+        time-format: "%H:%M"
+        date-format: "%m/%d %a"
+        content:
+          - string: {text: "{date} {time}"}
+    - label:
+        content: *separator
+    - battery:
+        name: BAT0
+        poll-interval: 30
+        content:
+          map:
+            tag: state
+            default:
+              - string: {text: "{capacity}%-"}
+            values:
+              discharging:
+                - string: {text: "{capacity}%-"}
+              charging:
+                - string: {text: "{capacity}%+"}
+              full:
+                - string: {text: "{capacity}%"}
+    - label:
+        content: {string: {text: " "}}

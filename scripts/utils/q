@@ -1,0 +1,60 @@
+#!/usr/bin/env sh
+
+tag=
+format_string="[[[\\e\\[35m[[%albumartist%]|[%artist%]]\\e\\[0m > ][\\e\\[36m[(%date%) ]%album%\\e\\[0m > ][\\e\\[1m[%track% - ][%title%]\\e\\[0m]]|%file%]"
+mpc_list_command=
+fzf_arg=
+
+case $1 in
+  t*)
+    mpc_list_command="listall"
+    fzf_arg="--with-nth=2.."
+    ;;
+  ar*)
+    mpc_list_command="list"
+    tag="albumartist"
+    ;;
+  al*)
+    mpc_list_command="list"
+    tag="album"
+    ;;
+  *)
+    echo "USAGE: q (title|artist|album)"
+    exit 1
+esac
+
+list=$(mpc -q -f "%file%\t${format_string}" $mpc_list_command $tag 2> /dev/null)
+if [ -z "$list" ]
+then
+  echo "no output from mpc"
+  return 1
+fi
+
+queuelist=$( echo "$list" | \
+  fzf --no-bold --ansi -m --delimiter="\t" ${fzf_arg} | \
+  awk -F "\t" '{print $1}' )
+
+if [ -z "$queuelist" ]
+then
+  echo "Nothing queued."
+  exit 0
+fi
+
+if [ -z "$tag" ]
+then
+  set -f
+  IFS=$(printf "\n")
+  set -- "$queuelist"
+  for arg
+  do
+    mpc add "$arg"
+  done
+else
+  set -f
+  IFS=$(printf "\n")
+  set -- "$queuelist"
+  for arg
+  do
+    mpc findadd "$tag" "$arg"
+  done
+fi

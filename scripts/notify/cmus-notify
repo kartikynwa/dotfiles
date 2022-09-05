@@ -1,0 +1,36 @@
+#!/bin/bash
+
+notification_id=3132119
+duration=5000
+
+dunstify_command="dunstify -t ${duration} -r ${notification_id}"
+
+if [ ! -x /usr/bin/cmus-remote ];
+then
+  echo "cmus is not installed."
+  exit
+fi
+
+cmus_remote_Q=$( cmus-remote -Q 2> /dev/null )
+
+# artist=$( cmus-remote -Q 2>/dev/null | grep "tag albumartist " | cut -d " " -f 3- )
+if [ -z "$artist" ]; then
+  artist=$( echo "$cmus_remote_Q" | grep "tag artist " | cut -d " " -f 3- )
+fi
+title=$( echo "$cmus_remote_Q" | grep "tag title " | cut -d " " -f 3- )
+album=$( echo "$cmus_remote_Q" | grep "tag album " | cut -d " " -f 3- )
+tracknumber=$( echo "$cmus_remote_Q" | grep "tag tracknumber " | cut -d " " -f 3- )
+filename=$( echo "$cmus_remote_Q" | grep "file " | cut -d " " -f 2- )
+vol=$( echo "$cmus_remote_Q" | grep "set vol_left " | cut -d " " -f 3- )
+
+if [ -n "$title" ];
+then
+  if [ -n "$tracknumber" ];
+  then
+    tracknumber="${tracknumber}. "
+  fi
+  ${dunstify_command} "${tracknumber}${title}" "by <b>${artist}</b>\nfrom <b>${album}</b>\nat a volume of <b>${vol}%</b>"
+elif [ -n "$filename" ];
+then
+  ${dunstify_command} "${filename##*/}"
+fi

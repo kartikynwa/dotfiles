@@ -1,0 +1,16 @@
+[mpdscribble]
+log = /home/kartik/.config/mpdscribble/mpdscribble.log
+verbose = 1
+
+[libre.fm]
+# libre.fm section, comment if you do not use libre.fm
+url = http://turtle.libre.fm/
+username = ksynwa
+password = {{ .mpdscribble.libre_fm.password }}
+journal = /home/kartik/.config/mpdscribble/librefm.journal
+
+[listenbrainz]
+url = http://proxy.listenbrainz.org/
+username = ksynwa
+password = {{ .mpdscribble.listenbrainz.api_token }}
+journal = /home/kartik/.config/mpdscribble/listenbrainz.journal
