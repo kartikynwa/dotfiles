@@ -10,6 +10,12 @@ export DOOMDIR=${HOME}/.config/doom.d
 export RUSTUP_HOME=$HOME/.local/rustup
 export CARGO_HOME=$HOME/.local/cargo
 
+{{- if eq .chezmoi.hostname "ksdc" }}
+
+# Set up keychain at login
+eval $(keychain -q --eval --agents ssh id_rsa)
+{{- end }}
+
 if [[ -z $TMUX ]] && [[ -z $SSH_CLIENT ]] && [[ -z $SSH2_CLIENT ]] && [[ "$TTY" = "/dev/tty1" ]]; then
   startx
 fi
