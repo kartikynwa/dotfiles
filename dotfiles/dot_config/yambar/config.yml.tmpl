@@ -91,7 +91,7 @@ bar:
     - label:
         content: *separator
     - network:
-        name: {{ if ne .chezmoi.hostname "ksdc" }} wlp0s20f3 {{ else }} wlp3s0 {{- end }}
+        name: {{ .wifi_device }}
         content:
           - string: {text: "{ssid}"}
     - label:
