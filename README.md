@@ -42,3 +42,7 @@ Edit `/etc/sudoers` using the `visudo` command. Add the following line:
 #### Configure laptop lid behaviour
 
 In `/etc/acpi/handler.sh`. You know the rest (I hope).
+
+## Screenshot
+
+![Taken on 2022-09-06](./assets/screenshot-20220906.png)
