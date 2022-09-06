@@ -1,37 +1,36 @@
 # Hello.
 
-# NEEDS TO BE UPDATED. DO NOT READ.
-
-## Screenshots
-
-![screenshot_1](screenshots/screenshot_1.png "Naked")
-
 ## Instructions
 
-Initiate a fresh Void Linux installation with these awesome ai machine learning
-blockchain powered agile ninja powered scripts which allow quick deployment of
-amazing features.
+### Set up chezmoi
 
-### Install Dependencies
+Need to install [chezmoi](https://chezmoi.io) first and pull the configuration:
 
 ```
-# ./install_packages.sh
+# xbps-install -Sy chezmoi
+$ chezmoi init https://gitlab.com/kartikynwa/dotfiles.git
 ```
 
-### Symlink Dotfiles 
+Most of the packages required are listed in the `packages.txt` file in the
+repository. Installation can be automated using the `install_packages.sh`
+script but it is recommended that you go over the packages that are being
+installed.
 
-Be careful while doing this. Do not forget to look at which files the script
-symlinks. For now, the script doesn't overwrite any files but caution is advised
-anyway.
+### Apply the dotfiles
+
+
 ```
-$ ./install.sh
+$ chezmoi apply --init
+$ chezmoi apply
 ```
 
-### Change default shell
+### Miscellaneous configuration
+
+#### Change default shell
 
 `chsh`
 
-### Add power commands to NOPASSWD
+#### Add power commands to NOPASSWD
 
 Edit `/etc/sudoers` using the `visudo` command. Add the following line:
 
@@ -40,32 +39,6 @@ Edit `/etc/sudoers` using the `visudo` command. Add the following line:
             /usr/bin/shutdown, /usr/bin/zzz, /usr/bin/ZZZ
 ```
 
-### Install PulseAudio
-
-Because it works(TM). Packages needed are included in `packages.txt`. [Link to
-Void Docs.](https://docs.voidlinux.org/config/media/pulseaudio.html)
-
-### Configure laptop lid behaviour
+#### Configure laptop lid behaviour
 
 In `/etc/acpi/handler.sh`. You know the rest (I hope).
-
-### Font Rendering (?)
-
-I am unsure whether this step is required but disabling bitmap fonts helps
-prevent some problems (eg. with Firefox). I don't know if this works because my
-laptop has a slick 720p screen which is only marginally better than literally
-using a teletype.
-
-[Blog link.](http://blog.brunomiguel.net/geekices/how-to-get-good-font-rendering-in-void-linux/)
-[Archived link.](https://web.archive.org/web/20190801090733/http://blog.brunomiguel.net/geekices/how-to-get-good-font-rendering-in-void-linux/)
-
-## Things That Do Not Matter
-
-![Scotty2Hotty](scotty2hotty.png "Scotty2Hotty")  
-© All rights reserved by Scotty2Hotty. (I think.)
-
-Welcome to the humble abode of my _dotfiles_. They work in mysterious ways. They
-have their destination (relative to `$HOME`) as a comment and a script parses
-them and symlinks them there.
-
-Adieu, friend.
