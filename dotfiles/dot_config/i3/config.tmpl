@@ -15,8 +15,9 @@ hide_edge_borders smart
 floating_maximum_size 1600 x 900
 
 # Monitor controls
-set $LAPTOP_MONITOR   {{ .i3.laptop_monitor }}
-set $EXTERNAL_MONITOR {{ .i3.external_monitor }}
+{{- $hostname := .chezmoi.hostname }}
+set $LAPTOP_MONITOR   {{- if eq $hostname "ksdc" }} eDP {{- else }} DP-2 {{- end }}
+set $EXTERNAL_MONITOR {{- if eq $hostname "ksdc" }} HDMI-A-0 {{- else }} DP-0 {{- end }}
 bindsym $mod+Shift+m exec --no-startup-id xrandr \
           --output $LAPTOP_MONITOR --primary --mode 1920x1080 --pos 0x0 --rotate normal \
           --output $EXTERNAL_MONITOR --off && \
