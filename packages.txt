@@ -75,5 +75,6 @@ xsel
 xtools
 yambar
 yaru-plus
+zoxide
 zsh
 zsh-completions
