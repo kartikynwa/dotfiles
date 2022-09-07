@@ -139,7 +139,8 @@ bindsym XF86AudioMute              exec --no-startup-id pactl set-sink-mute @DEF
 
 # Screenshots
 bindsym $mod+Shift+s   exec --no-startup-id maim ~/pics/screenshots/screenshot-$( date -u +"%Y%m%d%H%M%S" ).png
-bindsym $mod+Control+s exec --no-startup-id maim -u -s ~/pics/screenshots/screenshot-$( date -u +"%Y%m%d%H%M%S" ).png
+bindsym $mod+Control+s exec --no-startup-id maim -u -s | xclip -selection clipboard -t image/png && \
+                                            notify-send.sh -r maim_clipboard main "Screenshot copied to clipboard"
 
 # skedaddle between workspaces with this COOL hack
 bindsym $mod+space workspace back_and_forth
