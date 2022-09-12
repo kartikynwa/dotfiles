@@ -1,0 +1,24 @@
+theme = "gruvbox"
+
+[editor]
+line-number = "relative"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.indent-guides]
+render = true
+character = "┊"
+
+[keys.normal]
+"a" = ["append_mode", "collapse_selection"]
+"space" = { "c" = { "o" = ":config-open", "r" = ":config-reload" } }
+"esc" = ["collapse_selection"]
+
+[keys.insert]
+"esc" = ["normal_mode", "collapse_selection"]
+
+[keys.select]
+"esc" = ["normal_mode", "collapse_selection"]
