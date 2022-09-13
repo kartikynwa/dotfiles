@@ -42,7 +42,8 @@ bindsym $mod+Shift+q kill
 bindsym $mod+o exec --no-startup-id pcmanfm-qt
 
 # start dmenu (a program launcher)
-bindsym $mod+d   exec --no-startup-id zsh {{ .chezmoi.workingTree }}/scripts/utils/rofi-i3
+bindsym $mod+d   exec --no-startup-id rofi -show drun
+bindsym $mod+Shift+d   exec --no-startup-id zsh {{ .chezmoi.workingTree }}/scripts/utils/rofi-i3
 bindsym $mod+Tab exec --no-startup-id rofi -show window
 bindsym $mod+p   exec --no-startup-id rofi-pass
 
