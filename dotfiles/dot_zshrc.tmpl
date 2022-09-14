@@ -15,27 +15,11 @@ title() { export TITLE="$*" }
 fpath=("${HOME}/.config/zsh.d" "${HOME}/.local/etc/bash_completion.d" $fpath)
 
 # Variables
-GOPATH="${HOME}/go"
-PATH="${HOME}/.cargo/bin:${HOME}/.local/bin:${PATH}:${GOPATH}/bin"
-PATH="/home/kartik/perl5/bin${PATH:+:${PATH}}"
-PATH="~/.local/share/npm-global/bin:${PATH}"
-PATH="~/.emacs.d/bin:${PATH}"
-PATH="{{ .chezmoi.workingTree }}/scripts/utils:${PATH}"
-
-PERL5LIB="/home/kartik/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/kartik/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/kartik/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/kartik/perl5"; export PERL_MM_OPT;
-SCRCPY_SERVER_PATH=/usr/share/scrcpy/scrcpy-server-v1.9.jar
-
 BROWSER="firefox"
 EDITOR="vim"
 SUDO_EDITOR="rvim"
 PASSWORD_STORE_CLIP_TIME=5
 WINEDEBUG=-all
-# export GOROOT="/usr/lib/go"
-# export RUST_SRC_PATH="$( rustc --print sysroot )/lib/rustlib/src/rust/src"
-
 
 # Colours for ls
 LS_COLORS='rs=0:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:tw=30;42:ow=01;44:st=37;44:ex=01;32:';
