@@ -12,12 +12,12 @@ precmd () { print -Pn "\e]0;$TITLE\a" }
 title() { export TITLE="$*" }
 
 # add to fpath
-fpath=("${HOME}/.config/zsh.d" "${HOME}/.local/etc/bash_completion.d" $fpath)
+fpath=("${HOME}/.config/zsh.d" $fpath)
 
 # Variables
 BROWSER="firefox"
 EDITOR="vim"
-SUDO_EDITOR="rvim"
+SUDO_EDITOR="vim"
 PASSWORD_STORE_CLIP_TIME=5
 WINEDEBUG=-all
 
@@ -50,7 +50,6 @@ setopt autocd \
 # Aliases (or Alii)
 alias :q="exit"
 alias n="NNN_USE_EDITOR=1 nnn"
-alias ra="ranger"
 alias ls="ls --color -F --group-directories-first"
 alias l=ls
 alias ll="ls --color -lh --group-directories-first"
@@ -58,11 +57,8 @@ alias rm="rm -vI"
 alias cp="cp -vi"
 alias mv="mv -vi"
 alias mkdir="mkdir -pv"
-alias syslog="socklog"
 alias v="nvim"
-alias e="TERM=alacritty-direct emacs -nw"
 alias bulkrename="qmv -f do"
-alias tremote="transmission-remote"
 alias za="zathura"
 alias open="xdg-open"
 alias protocol="sudo xbps-install -Suy && sudo poweroff"
@@ -72,21 +68,10 @@ alias xs="xbps-query -Rs"
 alias xu="sudo xbps-install -Su"
 alias mkdoc="sudo makewhatis /usr/share/man"
 
-alias gcm="git commit -m"
-alias gp="git push"
-
-alias getsubtitle="subliminal download -l en"
 alias mpdscribble="/usr/bin/mpdscribble --conf ~/.config/mpdscribble/mpdscribble.conf"
 alias shuffle_library="mpc listall synced_music/ | ashuffle -f - & disown"
 
-alias tb="nc termbin.com 9999"
-
-alias btctl="bluetoothctl"
-alias bton="bluetoothctl -- power on"
-alias btoff="bluetoothctl -- power off"
-
-alias mpd-study="mpd ~/.config/mpd-study_music/mpd.conf"
-alias yr="pkill yambar; yambar & disown"
+alias termbin="nc termbin.com 9999"
 
 # Modules
 autoload -Uz compinit
@@ -98,33 +83,6 @@ zstyle ':completion:*' list-colors
 
 autoload -U select-word-style
 select-word-style bash
-
-setprompt() {
-  setopt prompt_subst
-
-  if [[ -n "$SSH_CLIENT"  ||  -n "$SSH2_CLIENT" ]]; then
-    p_host='%F{yellow}%M%f'
-  else
-    p_host='%F{blue}%M%f'
-  fi
-
-  PS1=${(j::Q)${(Z:Cn:):-$'
-    %(!.%F{red}%n%f.%F{blue}%n%f)
-    %F{cyan}@%f
-    ${p_host}
-    " "
-    %(!.%F{red}%#%f.%F{magenta}%#%f)
-    " "
-  '}}
-
-  PS2=$'%_>'
-
-  RPROMPT=${(j::Q)${(Z:Cn:):-$'
-    %F{cyan}"("%f
-    %F{blue}%.%f
-    %F{cyan}")"%f
-  '}}
-}
 
 checksha256 () {
   FILE=$(mktemp)
@@ -151,30 +109,6 @@ shuffle () {
   fi
 }
 
-# mkcd, mkdir and cd's illegitimate daughter
-mkcd () {
-  if [ -n $1 ]; then
-    mkdir -vp "$1"
-    cd "$1"
-    echo "traversed into created directory"
-  else
-    echo "mkcd: missing operand"
-  fi
-}
-
-# acempv function
-acempv () {
-  link=""
-  if [ -z $1 ]
-  then
-    link="$(xsel)"
-    echo "link=${link}"
-  else
-    link="$1"
-  fi
-  mpv --profile=acestream "acestream://${link}"
-}
-
 # convert lossless to opus
 iwantopus () {
   if [ -z "$1" ]
@@ -193,29 +127,7 @@ iwantopus () {
   # fd -e "${input_format}" -d 1 -x opusenc "{}" --bitrate 320 "./opus/{.}.opus"
 }
 
-# twitch wrapper with streamlink, mpv function
-twitch () {
-  if [ -n "$1" ]
-  then
-    if [ -n "$2" ]
-    then
-      streamlink -p mpv "https://twitch.tv/${1}" "${2}"
-    else
-      streamlink -p mpv "https://twitch.tv/${1}" best
-    fi
-  else
-    echo "USAGE: twitch channel_name [quality]"
-  fi
-}
-
-# # NVM: Node Version Manager
-# export NVM_DIR="$HOME/.local/share/nvm"
-# # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# load-nvm () {
-#   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# }
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
+# source some installed configurations
 for file (
     /usr/share/fzf/key-bindings.zsh
     "$CARGO_HOME/env"
