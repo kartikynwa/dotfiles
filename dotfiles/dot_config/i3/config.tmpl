@@ -44,7 +44,6 @@ bindsym $mod+o exec --no-startup-id pcmanfm-qt
 # start dmenu (a program launcher)
 bindsym $mod+d   exec --no-startup-id rofi -show drun
 bindsym $mod+Shift+d   exec --no-startup-id zsh {{ .chezmoi.workingTree }}/scripts/utils/rofi-i3
-bindsym $mod+Tab exec --no-startup-id rofi -show window
 bindsym $mod+p   exec --no-startup-id rofi-pass
 
 # Power menu mode
@@ -144,7 +143,7 @@ bindsym $mod+Control+s exec --no-startup-id maim -u -s | xclip -selection clipbo
                                             notify-send.sh -r maim_clipboard main "Screenshot copied to clipboard"
 
 # skedaddle between workspaces with this COOL hack
-bindsym $mod+space workspace back_and_forth
+bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+Prior workspace next
 bindsym $mod+Next  workspace prev
 
