@@ -80,7 +80,7 @@ bar:
     - label:
         content: *separator
     - alsa:
-        card: "hw:0"
+        card: {{ .alsa_device | quote }}
         mixer: Master
         content:
           map:
@@ -91,7 +91,7 @@ bar:
     - label:
         content: *separator
     - network:
-        name: {{ .wifi_device }}
+        name: {{ .wifi_device | quote }}
         content:
           - string: {text: "{ssid}"}
     - label:
