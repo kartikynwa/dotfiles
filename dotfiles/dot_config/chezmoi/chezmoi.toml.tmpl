@@ -19,11 +19,18 @@
 {{-   $wifi_device = "wlp3s0" -}}
 {{- end -}}
 
+{{/* alsa sound card name */}}
+{{- $alsa_device := "hw:0" -}}
+{{- if $work -}}
+{{-   $alsa_device = "default:1" -}}
+{{- end -}}
+
 [data]
 work = {{ $work }}
 laptop_monitor = {{ $laptop_monitor | quote }}
 external_monitor = {{ $external_monitor | quote }}
 wifi_device = {{ $wifi_device | quote }}
+alsa_device = {{ $alsa_device | quote }}
 
 # TODO: Use secrets
 [data.mpdscribble.libre_fm]
