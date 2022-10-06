@@ -8,7 +8,7 @@
 --         a config file
 
 -- Based on: https://github.com/nvim-lua/kickstart.nvim
--- Last updated against: fd7f05d872092673ef6a883f72edbf859d268a2e
+-- Last updated against: c8a140577832ed4f958f4964400b2591abea3825
 
 ------------
 -- packer --
@@ -43,6 +43,7 @@ require('packer').startup(function(use)
 
   use {
     'nvim-telescope/telescope.nvim',
+    branch = '0.1.x',
     requires = {
       { 'nvim-lua/plenary.nvim' },
       { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
@@ -57,10 +58,11 @@ require('packer').startup(function(use)
   use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
 
   use 'nvim-treesitter/nvim-treesitter' -- For syntax highlighting I think
-  use 'nvim-treesitter/nvim-treesitter-textobjects' -- For tree-sitter I think
+  use { 'nvim-treesitter/nvim-treesitter-textobjects', after = { 'nvim-treesitter' } } -- For tree-sitter I think
 
   use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
-  use 'williamboman/nvim-lsp-installer' -- Automatically install language servers
+  use 'williamboman/mason.nvim' -- Manage external editor tooling i.e LSP servers
+  use 'williamboman/mason-lspconfig.nvim' -- Automatically install language servers to stdpath
   use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-path'
@@ -100,10 +102,6 @@ vim.o.completeopt = 'menuone,noinsert'
 
 -- Use global status line
 vim.o.laststatus = 3
-
--- Lua filetype detection
-vim.g.do_filetype_lua = 1
-vim.g.did_load_filetypes = 0
 
 -- tabs
 vim.o.tabstop = 2
@@ -242,23 +240,23 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-local lsp_opts = {
-  on_attach = on_attach,
-  capabilities = capabilities,
+-- Setup mason so it can manage external tooling
+require('mason').setup()
+
+-- Enable the following language servers
+local servers = { 'pyright' }
+
+-- Ensure the servers above are installed
+require('mason-lspconfig').setup {
+  ensure_installed = servers,
 }
 
--- Enable manually installed LSP servers
--- local servers = { "rust_analyzer" }
-local servers = {}
-for _, lsp in pairs(servers) do
-  lspconfig[lsp].setup(lsp_opts)
+for _, lsp in ipairs(servers) do
+  require('lspconfig')[lsp].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+  }
 end
-
--- Enable nvim-lsp-installer installed LSP servers
-local lsp_installer = require 'nvim-lsp-installer'
-lsp_installer.on_server_ready(function(server)
-  server:setup(lsp_opts)
-end)
 
 ------------------------------
 -- Treesitter configuration --
