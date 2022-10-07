@@ -20,7 +20,7 @@ installed.
 
 
 ```
-$ chezmoi apply --init
+$ chezmoi apply ~/.config/chezmoi
 $ chezmoi apply
 ```
 
