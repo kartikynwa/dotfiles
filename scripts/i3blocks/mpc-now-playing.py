@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-from mpd import MPDClient
 import os
+
 import psutil
+from mpd import MPDClient
 
 client_ip = "127.0.0.1"
 client_port = 6600

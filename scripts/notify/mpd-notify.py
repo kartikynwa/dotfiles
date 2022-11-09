@@ -5,6 +5,7 @@ Requires python3-mpd2 and notify-send.sh
 """
 
 import subprocess
+
 from mpd import MPDClient
 
 n_body = []
