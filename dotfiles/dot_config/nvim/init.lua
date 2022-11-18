@@ -139,6 +139,10 @@ vim.g.maplocalleader = ' '
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+-- Some experimental keybindings
+vim.keymap.set({ 'n', 'v' }, '<C-o>', '<Nop>', { silent = true }) -- control+o opens random files D:
+vim.keymap.set({ 'v' }, '<C-c>', '"+y', { silent = true }) -- try copy shortcut
+
 -------------------------------
 -- indent-blankline settings --
 -------------------------------
@@ -150,15 +154,13 @@ require('indent_blankline').setup {
 --------------
 -- Gitsigns --
 --------------
-require('gitsigns').setup {
-  signs = {
-    add = { hl = 'GitGutterAdd', text = '+' },
-    change = { hl = 'GitGutterChange', text = '~' },
-    delete = { hl = 'GitGutterDelete', text = '_' },
-    topdelete = { hl = 'GitGutterDelete', text = '‾' },
-    changedelete = { hl = 'GitGutterChange', text = '~' },
-  },
-}
+local gitsigns = require 'gitsigns'
+gitsigns.setup()
+vim.keymap.set('n', '<leader>gn', gitsigns.next_hunk)
+vim.keymap.set('n', '<leader>gp', gitsigns.prev_hunk)
+vim.keymap.set('n', '<leader>gs', gitsigns.stage_hunk)
+vim.keymap.set('n', '<leader>gr', gitsigns.reset_hunk)
+vim.keymap.set('n', '<leader>gb', gitsigns.blame_line)
 
 ---------------
 -- Telescope --
