@@ -8,7 +8,7 @@ HISTSIZE=1000
 SAVEHIST=1000
 
 # PATH
-PATH="$HOME/.local/bin:$PATH"
+PATH="$HOME/.local/bin:{{ .chezmoi.workingTree }}/scripts/utils:$PATH"
 
 # title to something sane
 precmd () { print -Pn "\e]0;$TITLE\a" }
