@@ -158,8 +158,8 @@ local gitsigns = require 'gitsigns'
 gitsigns.setup()
 vim.keymap.set('n', '<leader>gn', gitsigns.next_hunk)
 vim.keymap.set('n', '<leader>gp', gitsigns.prev_hunk)
-vim.keymap.set('n', '<leader>gs', gitsigns.stage_hunk)
-vim.keymap.set('n', '<leader>gr', gitsigns.reset_hunk)
+vim.keymap.set({ 'n', 'v' }, '<leader>gs', gitsigns.stage_hunk)
+vim.keymap.set({ 'n', 'v' }, '<leader>gr', gitsigns.reset_hunk)
 vim.keymap.set('n', '<leader>gb', gitsigns.blame_line)
 
 ---------------
