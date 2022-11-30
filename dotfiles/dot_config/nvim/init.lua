@@ -13,7 +13,7 @@
 ------------
 -- packer --
 ------------
--- Install packer if it's not already installed
+-- install packer if it's not already installed
 
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 
@@ -24,7 +24,7 @@ end
 local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
 vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | PackerCompile', group = packer_group, pattern = 'init.lua' })
 
--- Install plugins
+-- install plugins
 local use = require('packer').use
 require('packer').startup(function(use)
   -- the package manager
@@ -90,7 +90,7 @@ require('packer').startup(function(use)
 end)
 
 --------------------
--- Neovim settings --
+-- neovim settings --
 --------------------
 vim.o.hlsearch = false -- Set highlight on search
 vim.o.mouse = 'a' -- Enable mouse mode
@@ -100,23 +100,23 @@ vim.wo.number = true -- Make line numbers default
 
 vim.cmd [[set undofile]] -- Save undo history
 
--- Case insensitive searching UNLESS /C or capital in search
+-- case insensitive searching unless /c or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
--- Decrease update time
+-- decrease update time
 vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
 
--- Set colorscheme (order is important here)
+-- set colorscheme (order is important here)
 vim.o.termguicolors = true
 vim.g.gruvbox_material_palette = 'original'
 vim.cmd [[colorscheme gruvbox-material]]
 
--- Set completeopt to have a better completion experience
+-- set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noinsert'
 
--- Use global status line
+-- use global status line
 vim.o.laststatus = 3
 
 -- tabs
@@ -127,7 +127,7 @@ vim.o.expandtab = true
 -- relative line number
 vim.o.relativenumber = true
 
--- Highlight on yank
+-- highlight on yank
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
@@ -146,18 +146,18 @@ require('lightspeed').setup {
 }
 
 ------------------------
--- Neovim keybindings --
+-- neovim keybindings --
 ------------------------
--- Remap space as leader key
+-- remap space as leader key
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Remap for dealing with word wrap
+-- remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
--- Some experimental keybindings
+-- some experimental keybindings
 vim.keymap.set({ 'n', 'v' }, '<C-o>', '<Nop>', { silent = true }) -- control+o opens random files D:
 vim.keymap.set({ 'v' }, '<C-c>', '"+y', { silent = true }) -- try copy shortcut
 
@@ -170,7 +170,7 @@ require('indent_blankline').setup {
 }
 
 --------------
--- Gitsigns --
+-- gitsigns --
 --------------
 local gitsigns = require 'gitsigns'
 gitsigns.setup()
@@ -181,7 +181,7 @@ vim.keymap.set({ 'n', 'v' }, '<leader>gr', gitsigns.reset_hunk)
 vim.keymap.set('n', '<leader>gb', gitsigns.blame_line)
 
 ---------------
--- Telescope --
+-- telescope --
 ---------------
 require('telescope').setup {
   defaults = {
@@ -214,7 +214,7 @@ require('telescope').setup {
 
 require('telescope').load_extension 'fzf'
 
--- Add leader shortcuts
+-- add leader shortcuts
 vim.keymap.set('n', '<leader><space>', function()
   require('telescope.builtin').buffers(require('telescope.themes').get_dropdown { sort_lastused = true, ignore_current_buffer = true })
 end)
@@ -226,7 +226,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').grep_string)
 vim.keymap.set('n', '<leader>/', require('telescope.builtin').live_grep)
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles)
 
--- Diagnostic keymaps
+-- diagnostic keymaps
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
@@ -259,13 +259,13 @@ end
 -- nvim-cmp supports additional completion capabilities
 capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- Setup mason so it can manage external tooling
+-- setup mason so it can manage external tooling
 require('mason').setup()
 
--- Enable the following language servers
+-- enable the following language servers
 local language_servers = { 'pyright', 'rust_analyzer' }
 
--- Ensure the servers above are installed
+-- ensure the servers above are installed
 require('mason-lspconfig').setup {
   ensure_installed = language_servers,
 }
@@ -278,9 +278,9 @@ for _, lsp in ipairs(language_servers) do
 end
 
 ------------------------------
--- Treesitter configuration --
+-- treesitter configuration --
 ------------------------------
--- Parsers must be installed manually via :TSInstall
+-- parsers must be installed manually via :tsinstall
 require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true, -- false will disable the whole extension
@@ -304,7 +304,7 @@ require('nvim-treesitter.configs').setup {
       enable = true,
       lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
       keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
+        -- you can use the capture groups defined in textobjects.scm
         ['aa'] = '@parameter.outer',
         ['ia'] = '@parameter.inner',
         ['af'] = '@function.outer',
@@ -339,7 +339,7 @@ require('nvim-treesitter.configs').setup {
 -----------------
 -- nvim-cmp setup --
 -----------------
--- Set completeopt to have a better completion experience
+-- set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
 -- nvim-cmp setup
