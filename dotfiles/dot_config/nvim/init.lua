@@ -8,7 +8,7 @@
 --         a config file
 
 -- Based on: https://github.com/nvim-lua/kickstart.nvim
--- Last updated against: c8a140577832ed4f958f4964400b2591abea3825
+-- Last updated against: d5bbf7cef2ad43a9f279399ec508777141e568c4
 
 ------------
 -- packer --
@@ -27,20 +27,23 @@ vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | Packer
 -- Install plugins
 local use = require('packer').use
 require('packer').startup(function(use)
-  use 'wbthomason/packer.nvim' -- Package manager
+  -- the package manager
+  use 'wbthomason/packer.nvim'
 
-  use 'tpope/vim-fugitive' -- Git commands in nvim
-  use 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
-  use { -- "gc" to comment visual regions/lines
+  -- plugins for navigation, ui, etc.
+  use {
     'numToStr/Comment.nvim',
     config = function()
       require('Comment').setup()
     end,
   }
-  use 'tpope/vim-surround' -- You have been surrounded
-  use 'tpope/vim-repeat' -- . works better with this
-  use 'ggandor/lightspeed.nvim' -- `f` on 'roids
+  use 'tpope/vim-surround'
+  use 'tpope/vim-repeat'
+  use 'ggandor/lightspeed.nvim'
+  use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
+  use 'lukas-reineke/indent-blankline.nvim'
 
+  -- telescope
   use {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
@@ -50,24 +53,37 @@ require('packer').startup(function(use)
     },
   }
 
-  use 'sainnhe/gruvbox-material' -- THE colorscheme :)
+  -- colorscheme
+  use 'sainnhe/gruvbox-material'
 
-  use { 'feline-nvim/feline.nvim', branch = 'master' } -- Status line
+  -- status line
+  use { 'feline-nvim/feline.nvim', branch = 'master' }
 
-  use 'lukas-reineke/indent-blankline.nvim' -- indent blank lines
-  use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
+  -- treesitter
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
+      pcall(require('nvim-treesitter.install').update { with_sync = true })
+    end,
+  }
+  use { 'nvim-treesitter/nvim-treesitter-textobjects', after = { 'nvim-treesitter' } }
 
-  use 'nvim-treesitter/nvim-treesitter' -- For syntax highlighting I think
-  use { 'nvim-treesitter/nvim-treesitter-textobjects', after = { 'nvim-treesitter' } } -- For tree-sitter I think
+  -- lsp things
+  use 'neovim/nvim-lspconfig'
+  use 'williamboman/mason.nvim'
+  use 'williamboman/mason-lspconfig.nvim'
+  use {
+    'j-hui/fidget.nvim',
+    config = function()
+      require('fidget').setup()
+    end,
+  }
 
-  use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
-  use 'williamboman/mason.nvim' -- Manage external editor tooling i.e LSP servers
-  use 'williamboman/mason-lspconfig.nvim' -- Automatically install language servers to stdpath
-  use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
+  -- completion things
+  use 'L3MON4D3/LuaSnip'
+  use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-path'
-
-  use 'L3MON4D3/LuaSnip' -- Snippets plugin
   use 'saadparwaiz1/cmp_luasnip'
 
   use 'akinsho/toggleterm.nvim'
@@ -120,6 +136,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
+
+vim.g.sql_type_default = 'plsql'
 
 -- lightspeed.nvim configuration
 require('lightspeed').setup {
@@ -287,6 +305,8 @@ require('nvim-treesitter.configs').setup {
       lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
       keymaps = {
         -- You can use the capture groups defined in textobjects.scm
+        ['aa'] = '@parameter.outer',
+        ['ia'] = '@parameter.inner',
         ['af'] = '@function.outer',
         ['if'] = '@function.inner',
         ['ac'] = '@class.outer',
