@@ -10,10 +10,6 @@ SAVEHIST=1000
 # PATH
 PATH="$HOME/.local/bin:{{ .chezmoi.workingTree }}/scripts/utils:$PATH"
 
-# title to something sane
-precmd () { print -Pn "\e]0;$TITLE\a" }
-title() { export TITLE="$*" }
-
 # add to fpath
 fpath=("${HOME}/.config/zsh.d" $fpath)
 
@@ -160,10 +156,7 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-export PATH="$HOME/.nimble/bin:$PATH"
 {{- end }}
-
-
 eval "$(zoxide init zsh)"
 
 eval "$(starship init zsh)"
