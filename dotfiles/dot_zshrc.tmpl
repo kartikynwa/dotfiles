@@ -135,6 +135,13 @@ iwantopus () {
   # fd -e "${input_format}" -d 1 -x opusenc "{}" --bitrate 320 "./opus/{.}.opus"
 }
 
+# edit config files more easierly
+cfzf () {
+  file_path=$(chezmoi state dump | jq -r '.entryState | with_entries(select(.value.type == "file")) | keys | .[]' | fzf)
+  chezmoi edit --apply "$file_path"
+}
+
+
 # source some installed configurations
 for file (
     /usr/share/fzf/key-bindings.zsh
