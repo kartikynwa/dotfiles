@@ -133,8 +133,21 @@ iwantopus () {
 
 # edit config files more easierly
 cfzf () {
-  file_path=$(chezmoi state dump | jq -r '.entryState | with_entries(select(.value.type == "file")) | keys | .[]' | fzf)
-  chezmoi edit --apply "$file_path"
+  fzf_command=("fzf")
+  if [ -n "$1" ]; then
+    fzf_command=($fzf_command "--query=$1")
+  fi
+
+  file_path=$( \
+    chezmoi state dump | \
+    jq -r '.entryState | with_entries(select(.value.type == "file")) | keys | .[]' | \
+    ${fzf_command[@]} \
+  )
+  if [ -z "$file_path" ]; then
+    >&2 echo "No file selected"
+  else
+    chezmoi edit --apply "$file_path"
+  fi
 }
 
 
