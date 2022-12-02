@@ -66,7 +66,6 @@ require('packer').startup(function(use)
       pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
   }
-  use { 'nvim-treesitter/nvim-treesitter-textobjects', after = { 'nvim-treesitter' } }
 
   -- lsp things
   use 'neovim/nvim-lspconfig'
@@ -87,6 +86,8 @@ require('packer').startup(function(use)
   use 'saadparwaiz1/cmp_luasnip'
 
   use 'akinsho/toggleterm.nvim'
+
+  use 'ziglang/zig.vim'
 end)
 
 --------------------
@@ -176,8 +177,8 @@ local gitsigns = require 'gitsigns'
 gitsigns.setup()
 vim.keymap.set('n', '<leader>gn', gitsigns.next_hunk)
 vim.keymap.set('n', '<leader>gp', gitsigns.prev_hunk)
-vim.keymap.set({ 'n', 'v' }, '<leader>gs', gitsigns.stage_hunk)
-vim.keymap.set({ 'n', 'v' }, '<leader>gr', gitsigns.reset_hunk)
+vim.keymap.set('n', '<leader>gs', gitsigns.stage_hunk)
+vim.keymap.set('n', '<leader>gr', gitsigns.reset_hunk)
 vim.keymap.set('n', '<leader>gb', gitsigns.blame_line)
 
 ---------------
@@ -263,7 +264,7 @@ capabilities = require('cmp_nvim_lsp').default_capabilities()
 require('mason').setup()
 
 -- enable the following language servers
-local language_servers = { 'pyright', 'rust_analyzer' }
+local language_servers = { 'pyright', 'rust_analyzer', 'zls' }
 
 -- ensure the servers above are installed
 require('mason-lspconfig').setup {
@@ -293,46 +294,11 @@ require('nvim-treesitter.configs').setup {
       scope_incremental = 'grc',
       node_decremental = 'grm',
     },
+    disable = { 'zig' },
   },
   indent = {
     -- for now, disable indentation since most modules don't support
     enable = false,
-    -- disable = { "python" },
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-      keymaps = {
-        -- you can use the capture groups defined in textobjects.scm
-        ['aa'] = '@parameter.outer',
-        ['ia'] = '@parameter.inner',
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
-      },
-      goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
-      },
-      goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
-      },
-      goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
-      },
-    },
   },
 }
 
