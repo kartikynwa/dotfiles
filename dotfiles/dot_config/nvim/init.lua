@@ -220,7 +220,12 @@ vim.keymap.set('n', '<leader><space>', function()
   require('telescope.builtin').buffers(require('telescope.themes').get_dropdown { sort_lastused = true, ignore_current_buffer = true })
 end)
 vim.keymap.set('n', '<leader>.', function()
-  require('telescope.builtin').find_files { previewer = false }
+  local git_root = require('lspconfig.util').find_git_ancestor(vim.api.nvim_buf_get_name(0))
+  if git_root then
+    require('telescope.builtin').git_files { cwd = git_root, previewer = false }
+  else
+    require('telescope.builtin').find_files { previewer = false, find_command = { 'fd' } }
+  end
 end)
 vim.keymap.set('n', '<leader>sb', require('telescope.builtin').current_buffer_fuzzy_find)
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').grep_string)
