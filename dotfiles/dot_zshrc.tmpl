@@ -138,15 +138,11 @@ cfzf () {
     fzf_command=($fzf_command "--query=$1" "-1")
   fi
 
-  file_path=$( \
-    chezmoi state dump | \
-    jq -r '.entryState | with_entries(select(.value.type == "file")) | keys | .[]' | \
-    ${fzf_command[@]} \
-  )
+  file_path=$(chezmoi managed --include=files | ${fzf_command[@]})
   if [ -z "$file_path" ]; then
     >&2 echo "No file selected"
   else
-    chezmoi edit --apply "$file_path"
+    chezmoi edit --apply "$HOME/$file_path"
   fi
 }
 
