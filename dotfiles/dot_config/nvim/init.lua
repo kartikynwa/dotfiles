@@ -229,7 +229,9 @@ vim.keymap.set('n', '<leader>.', function()
 end)
 vim.keymap.set('n', '<leader>sb', require('telescope.builtin').current_buffer_fuzzy_find)
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').grep_string)
-vim.keymap.set('n', '<leader>/', require('telescope.builtin').live_grep)
+vim.keymap.set('n', '<leader>/', function()
+  require('telescope.builtin').live_grep { cwd = require('telescope.utils').buffer_dir() }
+end)
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles)
 
 -- diagnostic keymaps
