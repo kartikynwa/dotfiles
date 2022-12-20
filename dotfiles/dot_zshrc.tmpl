@@ -135,7 +135,7 @@ iwantopus () {
 cfzf () {
   fzf_command=("fzf")
   if [ -n "$1" ]; then
-    fzf_command=($fzf_command "--query=$1")
+    fzf_command=($fzf_command "--query=$1" "-1")
   fi
 
   file_path=$( \
