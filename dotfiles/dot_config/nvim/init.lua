@@ -8,7 +8,7 @@
 --         a config file
 
 -- Based on: https://github.com/nvim-lua/kickstart.nvim
--- Last updated against: d5bbf7cef2ad43a9f279399ec508777141e568c4
+-- Last updated against: 521940693e10eee57f4e67dce960d2229c1441d3
 
 ------------
 -- packer --
@@ -249,7 +249,7 @@ local on_attach = function(_, bufnr)
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+  vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, opts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
   vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
   vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
@@ -261,7 +261,9 @@ local on_attach = function(_, bufnr)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
   vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
   vim.keymap.set('n', '<leader>so', require('telescope.builtin').lsp_document_symbols, opts)
-  vim.api.nvim_create_user_command('Format', vim.lsp.buf.formatting, {})
+  vim.api.nvim_create_user_command('Format', function(_)
+    vim.lsp.buf.formatting()
+  end, { desc = 'Format current buffer with LSP' })
 end
 
 -- nvim-cmp supports additional completion capabilities
@@ -271,19 +273,22 @@ capabilities = require('cmp_nvim_lsp').default_capabilities()
 require('mason').setup()
 
 -- enable the following language servers
-local language_servers = { 'pyright', 'rust_analyzer', 'zls' }
+local servers = { pyright = {}, rust_analyzer = {}, zls = {} }
 
 -- ensure the servers above are installed
 require('mason-lspconfig').setup {
-  ensure_installed = language_servers,
+  ensure_installed = vim.tbl_keys(servers),
 }
 
-for _, lsp in ipairs(language_servers) do
-  require('lspconfig')[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
-end
+require('mason-lspconfig').setup_handlers {
+  function(server_name)
+    require('lspconfig')[server_name].setup {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = servers[server_name],
+    }
+  end,
+}
 
 ------------------------------
 -- treesitter configuration --
@@ -305,7 +310,8 @@ require('nvim-treesitter.configs').setup {
   },
   indent = {
     -- for now, disable indentation since most modules don't support
-    enable = false,
+    enable = true,
+    disable = { 'python' },
   },
 }
 
