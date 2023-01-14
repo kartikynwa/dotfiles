@@ -73,8 +73,9 @@ xorg-input-drivers
 xorg-minimal
 xsel
 xtools
-yambar
 yaru-plus
 zoxide
 zsh
 zsh-completions
+i3status-rust
+font-awesome6

@@ -216,6 +216,7 @@ set $purple    #b16286
 set $aqua      #689d68
 set $gray      #a89984
 set $darkgray  #1d2021
+set $newblue   #076678
 
 client.focused          #7c6f64 #7c6f64 #eddbb2 #2e9ef4   #7c6f64
 client.focused_inactive #282828 #5f676a #ffffff #484e50   #282828
@@ -226,6 +227,24 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
 
 bindsym $mod+r mode "resize"
+
+bar {
+  font pango:DejaVu Sans Mono, Font Awesome 6 Free 10
+  position top
+  status_command /usr/bin/i3status-rs
+  colors {
+    # bar background color
+    background $bg
+    # text color used for blocks that do not have a color specified.
+    statusline $yellow
+    # workspaces section            
+    #                    border    background text
+    focused_workspace    $newblue     $newblue      $fg
+    inactive_workspace   $bg $bg  $fg
+    active_workspace     $yellow     $bg      $fg
+    urgent_workspace     $red      $red       $fg
+  }
+}
 
 # Window settings
 for_window [class="feh"] border normal, floating enable
