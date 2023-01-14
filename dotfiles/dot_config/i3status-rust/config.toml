@@ -1,15 +1,12 @@
 [theme]
-name = "gruvbox-dark"
-[theme.overrides]
-separator = "|"
-separator_fg = "#7c6f64"
-good_bg = "#282828"
+name = "gruvbox-custom.toml"
 
 [icons]
 name = "awesome6"
 
 [[block]]
 block = "sound"
+show_volume_when_muted = true
 
 [[block]]
 block = "net"
