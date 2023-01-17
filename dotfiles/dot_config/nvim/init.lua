@@ -310,8 +310,8 @@ require('nvim-treesitter.configs').setup {
   },
   indent = {
     -- for now, disable indentation since most modules don't support
-    enable = true,
-    disable = { 'python' },
+    enable = false,
+    -- disable = { 'python' },
   },
 }
 
