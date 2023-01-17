@@ -16,7 +16,7 @@ interval = 5
 [[block]]
 block = "time"
 interval = 5
-format = "%m/%d %a %R"
+format = "%d/%m %a %R"
 
 [[block]]
 block = "battery"
