@@ -262,7 +262,7 @@ local on_attach = function(_, bufnr)
   vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
   vim.keymap.set('n', '<leader>so', require('telescope.builtin').lsp_document_symbols, opts)
   vim.api.nvim_create_user_command('Format', function(_)
-    vim.lsp.buf.formatting()
+    vim.lsp.buf.format { async = true }
   end, { desc = 'Format current buffer with LSP' })
 end
 
