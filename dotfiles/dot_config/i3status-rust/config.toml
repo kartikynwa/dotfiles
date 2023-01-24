@@ -7,6 +7,7 @@ name = "awesome6"
 [[block]]
 block = "sound"
 show_volume_when_muted = true
+on_click = "pavucontrol"
 
 [[block]]
 block = "net"
