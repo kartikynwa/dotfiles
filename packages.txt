@@ -47,6 +47,7 @@ pcmanfm-qt
 picom
 pinentry-qt
 pipewire
+wireplumber
 pre-commit
 python3-mpd2
 python3-neovim
