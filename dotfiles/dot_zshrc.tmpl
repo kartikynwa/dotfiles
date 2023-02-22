@@ -168,6 +168,12 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 {{- end }}
+
+
+# Set GPG_TTY
+GPG_TTY="$(tty)"
+export GPG_TTY
+
 eval "$(zoxide init zsh)"
 
 eval "$(starship init zsh)"
