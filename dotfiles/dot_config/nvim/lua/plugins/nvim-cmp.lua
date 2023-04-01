@@ -10,6 +10,7 @@ return {
       for i = #sources, 1, -1 do
         if sources[i].name == "buffer" then
           table.remove(sources, i)
+          break
         end
       end
 
