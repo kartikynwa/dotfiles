@@ -37,6 +37,7 @@ return {
     },
   },
 
+  -- seamless editing of GPG encrypted files
   "jamessan/vim-gnupg",
 
   {
@@ -54,6 +55,20 @@ return {
             [[                                   ]],
             [[                Powered by LazyVim ]],
           },
+        },
+      },
+    },
+  },
+
+  {
+    "folke/zen-mode.nvim",
+    opts = {
+      plugins = {
+        window = {
+          width = 100,
+        },
+        alacritty = {
+          enabled = true,
         },
       },
     },
