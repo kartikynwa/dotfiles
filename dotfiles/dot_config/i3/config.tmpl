@@ -258,5 +258,4 @@ exec --no-startup-id runsvdir {{ .chezmoi.workingTree }}/i3_services
 exec --no-startup-id {{ .chezmoi.workingTree }}/scripts/utils/picom_for_intel.sh
 exec --no-startup-id brillo -S 50
 
-exec_always --no-startup-id sv restart {{ .chezmoi.workingTree }}/i3_services/yambar
 exec_always --no-startup-id  {{ .chezmoi.workingTree }}/scripts/utils/wall.sh
