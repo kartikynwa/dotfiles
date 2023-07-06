@@ -5,6 +5,8 @@ return {
       "onsails/lspkind.nvim",
     },
     opts = function(_, opts)
+      local cmp = require("cmp")
+
       -- Remove the `buffer` nvim-cmp source
       local sources = opts.sources
       for i = #sources, 1, -1 do
@@ -14,8 +16,8 @@ return {
         end
       end
 
-      -- Set up nvim-web-devicons in the cmp UI
       local opts_to_merge = {
+        -- Set up nvim-web-devicons in the cmp UI
         formatting = {
           format = function(entry, vim_item)
             if vim.tbl_contains({ "path" }, entry.source.name) then
@@ -29,9 +31,20 @@ return {
             return require("lspkind").cmp_format({ with_text = false })(entry, vim_item)
           end,
         },
+        mapping = {
+          ["<C-Space>"] = cmp.mapping.confirm({
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true,
+          }),
+        },
+        performance = {
+          debounce = 120,
+          throttle = 120,
+        },
       }
-
-      return vim.tbl_deep_extend("force", opts_to_merge, opts or {})
+      opts = vim.tbl_deep_extend("force", opts or {}, opts_to_merge)
+      opts.mapping["<CR>"] = nil
+      return opts
     end,
   },
 }
