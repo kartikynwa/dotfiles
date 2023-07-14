@@ -1,6 +1,7 @@
 return {
   -- set Gruvbox as the colorscheme
   "ellisonleao/gruvbox.nvim",
+
   {
     "LazyVim/LazyVim",
     opts = {
@@ -69,6 +70,18 @@ return {
         },
         alacritty = {
           enabled = true,
+        },
+      },
+    },
+  },
+
+  {
+    "folke/flash.nvim",
+    opts = {
+      highlight = {
+        groups = {
+          match = "Normal",
+          current = "Normal",
         },
       },
     },
