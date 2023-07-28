@@ -84,6 +84,14 @@ return {
           current = "Normal",
         },
       },
+      modes = {
+        search = {
+          enabled = false,
+        },
+        char = {
+          enabled = false,
+        },
+      },
     },
   },
 }
