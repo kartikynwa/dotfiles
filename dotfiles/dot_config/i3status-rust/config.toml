@@ -1,25 +1,30 @@
 [theme]
-name = "gruvbox-custom.toml"
+theme = "gruvbox-custom.toml"
 
 [icons]
-name = "awesome6"
+icons = "awesome6"
 
 [[block]]
 block = "sound"
 show_volume_when_muted = true
-on_click = "pavucontrol"
+[[block.click]]
+button = "left"
+cmd = "pavucontrol"
 
 [[block]]
 block = "net"
-format = "{ssid}"
-interval = 5
+format = "$icon $ssid"
 
 [[block]]
 block = "time"
-interval = 5
-format = "%Y-%m-%d %a %R"
+format = " $icon $timestamp.datetime(f:'%a %Y-%m-%d %R') "
+# interval = 5
+# format = "%Y-%m-%d %a %R"
 
 [[block]]
 block = "battery"
-format = "{percentage}"
-full_format = "{percentage}"
+format = " $icon $percentage "
+full_format = " $icon $percentage "
+charging_format = " $icon $percentage "
+empty_format = " $icon $percentage "
+not_charging_format = " $icon $percentage "
