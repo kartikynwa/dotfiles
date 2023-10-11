@@ -79,4 +79,24 @@
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package projectile :config (projectile-mode +1))
+(defun consult-buffer-smart ()
+  "Execute `consult-buffer-project` if buffer is a projectile project, or `consult-buffer` otherwise"
+  (interactive)
+  (if (projectile-project-p)
+    (consult-project-buffer)
+    (consult-buffer)))
+
+(defun find-file-smart ()
+  "Execute `projectile-find-file` if buffer is a projectile project, or `find-file` otherwise"
+  (interactive)
+  (if (projectile-project-p)
+    (projectile-find-file)
+    (call-interactively #'find-file)))
+
+(use-package projectile
+  :ensure t
+  :config
+  (evil-define-key 'normal 'projectile-mode-map (kbd "<leader>p") 'projectile-command-map)
+  (evil-define-key 'normal 'projectile-mode-map (kbd "<leader>b") 'consult-buffer-smart)
+  (evil-define-key 'normal 'projectile-mode-map (kbd "<leader>f") 'find-file-smart)
+  (projectile-mode +1))

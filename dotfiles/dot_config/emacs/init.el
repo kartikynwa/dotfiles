@@ -77,6 +77,7 @@
 ;; If you want to turn off the welcome screen, uncomment this
 ;(setq inhibit-splash-screen t)
 
+(setq help-window-select t) ; auto-select help windows when they pop up
 (setq initial-major-mode 'fundamental-mode)  ; default mode for the *scratch* buffer
 (setq display-time-default-load-average nil) ; this information is useless for most
 
@@ -241,15 +242,15 @@ If the new path's directories does not exist, create them."
 ;; Uncomment the (load-file …) lines or copy code from the extras/ elisp files
 ;; as desired
 
+;; Vim-bindings in Emacs (evil-mode configuration)
+(load-file (expand-file-name "extras/vim-like.el" user-emacs-directory))
+
 ;; UI/UX enhancements mostly focused on minibuffer and autocompletion interfaces
 ;; These ones are *strongly* recommended!
 (load-file (expand-file-name "extras/base.el" user-emacs-directory))
 
 ;; Packages for software development
 (load-file (expand-file-name "extras/dev.el" user-emacs-directory))
-
-;; Vim-bindings in Emacs (evil-mode configuration)
-(load-file (expand-file-name "extras/vim-like.el" user-emacs-directory))
 
 ;; Org-mode configuration
 ;; WARNING: need to customize things inside the elisp file before use! See

@@ -27,6 +27,9 @@
 
   :config
   (evil-mode)
+  (evil-set-leader nil (kbd "SPC"))
+  (evil-define-key 'normal 'global (kbd "<leader>F") 'find-file)
+  (evil-define-key 'normal 'global (kbd "<leader>h") `("+help" . ,help-map))
 
   ;; Configuring initial major mode for some modes
   (evil-set-initial-state 'vterm-mode 'emacs))
