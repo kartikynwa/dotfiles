@@ -75,7 +75,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; If you want to turn off the welcome screen, uncomment this
-;(setq inhibit-splash-screen t)
+(setq inhibit-splash-screen t)
 
 (setq help-window-select t) ; auto-select help windows when they pop up
 (setq initial-major-mode 'fundamental-mode)  ; default mode for the *scratch* buffer
@@ -225,13 +225,22 @@ If the new path's directories does not exist, create them."
 (set-frame-font "JetBrainsMono Nerd Font 12" nil t)
 
 (use-package stimmung-themes
-  :demand t
   :ensure t
+  :demand t
+  :init
   :custom
   (stimmung-themes-constant 'none)
   (stimmung-themes-type 'none :italic? t)
   (stimmung-themes-comment 'foreground)
-  :config (stimmung-themes-load-light))
+  (column-number-mode t)
+  (mode-line-percent-position nil)
+  :config 
+  (setq-default mode-line-format (delq 'mode-line-modes mode-line-format))
+  (advice-add 'vc-git-mode-line-string :override (lambda (file) ""))
+  (stimmung-themes-load-light)
+(set-face-attribute 'mode-line-inactive nil :box '(:line-width 2 :color "gray95"))
+(set-face-attribute 'mode-line nil :box '(:line-width 2 :color "gray80"))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -251,6 +260,7 @@ If the new path's directories does not exist, create them."
 
 ;; Packages for software development
 (load-file (expand-file-name "extras/dev.el" user-emacs-directory))
+
 
 ;; Org-mode configuration
 ;; WARNING: need to customize things inside the elisp file before use! See

@@ -96,7 +96,9 @@
 (use-package projectile
   :ensure t
   :config
-  (evil-define-key 'normal 'projectile-mode-map (kbd "<leader>p") 'projectile-command-map)
-  (evil-define-key 'normal 'projectile-mode-map (kbd "<leader>b") 'consult-buffer-smart)
-  (evil-define-key 'normal 'projectile-mode-map (kbd "<leader>f") 'find-file-smart)
-  (projectile-mode +1))
+  (projectile-mode +1)
+  (tyrant-def
+    projectile-mode-map
+    "p" '(projectile-command-map :wk "projectile")
+    "," 'consult-buffer-smart
+    "." 'find-file-smart))

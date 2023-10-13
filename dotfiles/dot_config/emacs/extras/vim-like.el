@@ -19,6 +19,8 @@
   :ensure t
 
   :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
   (setq evil-respect-visual-line-mode t)
   (setq evil-undo-system 'undo-redo)
 
@@ -27,9 +29,25 @@
 
   :config
   (evil-mode)
-  (evil-set-leader nil (kbd "SPC"))
-  (evil-define-key 'normal 'global (kbd "<leader>F") 'find-file)
-  (evil-define-key 'normal 'global (kbd "<leader>h") `("+help" . ,help-map))
 
   ;; Configuring initial major mode for some modes
   (evil-set-initial-state 'vterm-mode 'emacs))
+
+;; General for managing keybindings
+(use-package general
+  :ensure t
+  :config
+  (evil-general-setup))
+
+(defun evil-general-setup ()
+  "Perform basic general.el setup for evil-mode"
+  (general-create-definer tyrant-def
+    :states '(normal insert motion emacs)
+    :prefix "SPC"
+    :non-normal-prefix "M-SPC"
+    :prefix-command 'tyrant-prefix-command
+    :prefix-map 'tyrant-prefix-map)
+  (tyrant-def
+    "h" '(:keymap help-map :wk "help")
+    "f" 'find-file
+    "b" 'consult-buffer))

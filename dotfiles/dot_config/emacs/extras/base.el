@@ -22,8 +22,10 @@
 (use-package avy
   :ensure t
   :demand t
-  :bind (("C-c j" . avy-goto-line)
-         ("s-j"   . avy-goto-char-timer)))
+  :config
+  (general-define-key
+    :states '(normal visual)
+    "s" 'avy-goto-char-timer))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -32,23 +34,38 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Consult: Misc. enhanced commands
+; (use-package consult
+;   :ensure t
+;   ;; Other good things to bind: consult-line-multi, consult-history,
+;   ;; consult-outline, consult-org-agenda, etc.
+;   :bind (("C-x b" . consult-buffer)  ; orig. switch-to-buffer
+;          ("M-y" . consult-yank-pop)  ; orig. yank-pop
+;          ("M-s r" . consult-ripgrep)
+;          ("C-s" . consult-line))     ; orig. isearch
+;   :config
+;   ;; Narrowing lets you restrict results to certain groups of candidates
+;   (setq consult-narrow-key "<"))
+
 (use-package consult
   :ensure t
   ;; Other good things to bind: consult-line-multi, consult-history,
   ;; consult-outline, consult-org-agenda, etc.
-  :bind (("C-x b" . consult-buffer)  ; orig. switch-to-buffer
-         ("M-y" . consult-yank-pop)  ; orig. yank-pop
-         ("M-s r" . consult-ripgrep)
-         ("C-s" . consult-line))     ; orig. isearch
   :config
+  (general-define-key
+    "C-x b" 'consult-buffer  ; orig. switch-to-buffer
+    "M-y" 'consult-yank-pop  ; orig. yank-pop
+    "M-s r" 'consult-ripgrep
+    "C-s" 'consult-line)     ; orig. isearch
   ;; Narrowing lets you restrict results to certain groups of candidates
   (setq consult-narrow-key "<"))
 
+;; TODO: Figure out what the fuck this package does
 (use-package embark
   :ensure t
   :demand t
   :after avy
-  :bind (("C-c a" . embark-act))        ; bind this to an easy key to hit
+  ; :bind
+  ; (("C-c a" . embark-act))        ; bind this to an easy key to hit
   :init
   ;; Add the option to run embark when using avy
   (defun bedrock/avy-action-embark (pt)
@@ -59,6 +76,8 @@
       (select-window
        (cdr (ring-ref avy-ring 0))))
     t)
+  ; :config
+  ; (tyrant-def "a" 'embark-act)
 
   ;; After invoking avy-goto-char-timer, hit "." to run embark at the next
   ;; candidate you select
@@ -84,9 +103,7 @@
 
 (use-package vertico-directory
   :elpaca nil
-  :after vertico
-  :bind (:map vertico-map
-              ("M-DEL" . vertico-directory-delete-word)))
+  :after vertico)
 
 ;; Marginalia: annotations for minibuffer
 (use-package marginalia
@@ -97,13 +114,33 @@
 ;; Popup completion-at-point
 (use-package corfu
   :ensure t
+
+  :custom
+  (corfu-auto t)
+  (corfy-cycle t)
+  (corfu-preselect 'prompt)
+  (corfu-quit-no-match 'separator)
+
   :init
   (global-corfu-mode)
-  :bind
-  (:map corfu-map
-        ("SPC" . corfu-insert-separator)
-        ("C-n" . corfu-next)
-        ("C-p" . corfu-previous)))
+  ;; corfu-map needs to take precedence over evil-insert-state-map otherwise
+  ;; keybindings don't work
+  (evil-make-overriding-map corfu-map)
+  (advice-add 'corfu--setup :after 'evil-normalize-keymaps)
+  (advice-add 'corfu--teardown :after 'evil-normalize-keymaps)
+
+  :config
+  ;; Using tab-and-go config from project's README
+  (general-define-key :keymaps 'corfu-map
+    "C-j" 'corfu-next
+    "C-n" 'corfu-next
+    "TAB" 'corfu-next
+    [tab] 'corfu-next
+    "C-k" 'corfu-previous
+    "C-p" 'corfu-previous
+    "S-TAB" 'corfu-previous
+    [backtab] 'corfu-previous
+  ))
 
 ;; Part of corfu
 (use-package corfu-popupinfo
