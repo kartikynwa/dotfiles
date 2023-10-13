@@ -39,5 +39,7 @@
                             (ns-appearance . dark)
                             (ns-transparent-titlebar . t)))
 
+(menu-bar-mode -1) ;; Disable menu-bar
+
 ;; Required by elpaca
 (setq package-enable-at-startup nil)
