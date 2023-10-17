@@ -210,8 +210,10 @@ If the new path's directories does not exist, create them."
 (setq tab-bar-show 0)
 
 ;; Add the time to the tab-bar, if visible
-(add-to-list 'tab-bar-format 'tab-bar-format-align-right 'append)
-(add-to-list 'tab-bar-format 'tab-bar-format-global 'append)
+(setq tab-bar-close-button-show nil)
+(setq tab-bar-show 1)                     ;; hide bar if <= 1 tabs open
+(setq tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
+
 (setq display-time-format "%a %F %T")
 (setq display-time-interval 1)
 (display-time-mode)
@@ -239,8 +241,8 @@ If the new path's directories does not exist, create them."
   (advice-add 'vc-git-mode-line-string :override (lambda (file) ""))
   (stimmung-themes-load-light)
 (set-face-attribute 'mode-line-inactive nil :box '(:line-width 2 :color "gray95"))
-(set-face-attribute 'mode-line nil :box '(:line-width 2 :color "gray80"))
-  )
+(set-face-attribute 'mode-line nil :box '(:line-width 2 :color "gray80")))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;

@@ -33,6 +33,12 @@
   ;; Configuring initial major mode for some modes
   (evil-set-initial-state 'vterm-mode 'emacs))
 
+(use-package evil-collection
+  :ensure t
+  :after evil
+  :config
+  (evil-collection-init))
+
 ;; General for managing keybindings
 (use-package general
   :ensure t
