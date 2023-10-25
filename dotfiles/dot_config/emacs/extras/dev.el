@@ -63,15 +63,28 @@
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
 (use-package eglot
   :elpaca nil
+  :demand t
+  :after (general)
 
   :custom
   (eglot-send-changes-idle-time 0.1)
 
   :config
-  (fset #'jsonrpc--log-event #'ignore))  ; massive perf boost---don't log every event
-
+  (fset #'jsonrpc--log-event #'ignore) ; massive perf boost---don't log every event
+  (general-auto-unbind-keys)
+  (general-define-key
+    :states '(normal motion)
+    :map eglot-mode-map
+    :prefix "SPC l"
+    "" '(nil :wk "eglot-prefix")
+    "l" 'eglot
+    "R" 'eglot-reconnect
+    "r" 'eglot-rename
+  )
+)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;

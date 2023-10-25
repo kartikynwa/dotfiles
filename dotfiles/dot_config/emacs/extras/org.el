@@ -36,13 +36,14 @@
 ;;; Consult configured (see the `base.el' file) then it should help you find
 ;;; what you're looking for.
 
-;;; Phase 1 variables
-
-;;; Phase 2 variables
+;; Spell check program
+(cond ((executable-find "enchant-2")  (setq-default ispell-program-name "enchant-2"))
+      ((executable-find "hunspell")   (progn (setq-default ispell-program-name "hunspell") (setq ispell-really-hunspell t)))
+      ((executable-find "aspell")     (setq-default ispell-program-name "aspell")))
 
 ;; Agenda variables
-(setq org-directory "~/Documents/org/") ; Non-absolute paths for agenda and
-                                        ; capture templates will look here.
+(setq org-directory "~/docs/org-mode/org") ; Non-absolute paths for agenda and
+                                           ; capture templates will look here.
 
 (setq org-agenda-files '("inbox.org" "work.org"))
 
@@ -52,7 +53,6 @@
                       (:startgroup)
                       ("home" . ?h)
                       ("work" . ?w)
-                      ("school" . ?s)
                       (:endgroup)
                       (:newline)
                       ;; scale
@@ -72,16 +72,16 @@
 ;;; Phase 3 variables
 
 ;; Org-roam variables
-(setq org-roam-directory "~/Documents/org-roam/")
-(setq org-roam-index-file "~/Documents/org-roam/index.org")
+(setq org-roam-directory "~/docs/org-mode/org-roam/")
+(setq org-roam-index-file "~/docs/org-mode/org-roam/index.org")
 
 ;;; Optional variables
 
 ;; Advanced: Custom link types
 ;; This example is for linking a person's 7-character ID to their page on the
 ;; free genealogy website Family Search.
-(setq org-link-abbrev-alist
-      '(("family_search" . "https://www.familysearch.org/tree/person/details/%s")))
+;; (setq org-link-abbrev-alist
+;;       '(("family_search" . "https://www.familysearch.org/tree/person/details/%s")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -90,6 +90,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package org
+  :elpaca nil
   :hook ((org-mode . visual-line-mode)  ; wrap lines at word breaks
          (org-mode . flyspell-mode))    ; spell checking!
 
@@ -104,20 +105,7 @@
   (setf (cdr (assoc 'file org-link-frame-setup)) 'find-file)
 
   ;; Make exporting quotes better
-  (setq org-export-with-smart-quotes t)
-  )
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;
-;;;   Phase 2: todos, agenda generation, and task tracking
-;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Yes, you can have multiple use-package declarations. It's best if their
-;; configs don't overlap. Once you've reached Phase 2, I'd recommend merging the
-;; config from Phase 1. I've broken it up here for the sake of clarity.
-(use-package org
-  :config
+  ; (setq org-export-with-smart-quotes t)
   ;; Instead of just two states (TODO, DONE) we set up a few different states
   ;; that a task can be in.
   (setq org-todo-keywords
@@ -140,16 +128,18 @@
           ("wr" "Work report" entry (file+headline "work.org" "Reports")
            "** TODO %?\n%U\n%i\n%a")))
 
-    (setq org-agenda-custom-commands
+  (setq org-agenda-custom-commands
           '(("n" "Agenda and All Todos"
              ((agenda)
               (todo)))
             ("w" "Work" agenda ""
-             ((org-agenda-files '("work.org")))))))
+             ((org-agenda-files '("work.org"))))))
+  )
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;;   Phase 3: extensions (org-roam, etc.)
+;;;   Phase 2: extensions (org-roam, etc.)
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -174,3 +164,7 @@
 ;        org-roam-ui-follow t
 ;        org-roam-ui-update-on-save t
 ;        org-roam-ui-open-on-start t))
+
+(use-package olivetti
+  :ensure t
+  :commands (olivetti-mode))
