@@ -230,8 +230,8 @@ If the new path's directories does not exist, create them."
 
 (use-package stimmung-themes
   :ensure t
-  :demand t
   :init
+  (stimmung-themes-load-light)
   :custom
   (stimmung-themes-constant 'none)
   (stimmung-themes-type 'none :italic? t)
@@ -241,9 +241,8 @@ If the new path's directories does not exist, create them."
   :config 
   (setq-default mode-line-format (delq 'mode-line-modes mode-line-format))
   (advice-add 'vc-git-mode-line-string :override (lambda (file) ""))
-  (stimmung-themes-load-light)
-(set-face-attribute 'mode-line-inactive nil :box '(:line-width 2 :color "gray95"))
-(set-face-attribute 'mode-line nil :box '(:line-width 2 :color "gray80")))
+  (set-face-attribute 'mode-line-inactive nil :box '(:line-width 2 :color "gray95"))
+  (set-face-attribute 'mode-line nil :box '(:line-width 2 :color "gray80")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;

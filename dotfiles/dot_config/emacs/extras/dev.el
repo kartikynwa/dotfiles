@@ -13,6 +13,13 @@
   :ensure t
   :bind (("C-x g" . magit-status)))
 
+;;
+
+(use-package envrc
+  :ensure t
+  :config
+  (envrc-global-mode))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;;   Common file types
@@ -53,6 +60,12 @@
 
   :commands (web-mode))
 
+(use-package blacken
+  :ensure t
+  :commands (blacken-buffer blacken-mode)
+  :general
+  (lang-prefix-def :keymaps 'python-mode-map "f" 'blacken-buffer))
+
 ;; Emacs ships with a lot of popular programming language modes. If it's not
 ;; built in, you're almost certain to find a mode for the language you're
 ;; looking for with a quick Internet search.
@@ -66,25 +79,21 @@
 
 (use-package eglot
   :elpaca nil
-  :demand t
-  :after (general)
 
   :custom
   (eglot-send-changes-idle-time 0.1)
 
-  :config
-  (fset #'jsonrpc--log-event #'ignore) ; massive perf boost---don't log every event
-  (general-auto-unbind-keys)
-  (general-define-key
-    :states '(normal motion)
-    :map eglot-mode-map
-    :prefix "SPC l"
-    "" '(nil :wk "eglot-prefix")
-    "l" 'eglot
-    "R" 'eglot-reconnect
+  :general
+  (lang-prefix-def "l" 'eglot)
+  (lang-prefix-def
+    :keymaps 'eglot-mode-map
     "r" 'eglot-rename
-  )
-)
+    "R" 'eglot-reconnect
+    "q" 'eglot-shutdown
+    "Q" 'eglot-shutdown-all)
+
+  :config
+  (fset #'jsonrpc--log-event #'ignore)) ; massive perf boost---don't log every event
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -107,11 +116,12 @@
     (call-interactively #'find-file)))
 
 (use-package projectile
-  :ensure t
-  :config
-  (projectile-mode +1)
-  (tyrant-def
-    projectile-mode-map
+  :ensure t :demand t
+  :general
+  (leader-def
+    :keymaps 'projectile-mode-map
     "p" '(projectile-command-map :wk "projectile")
     "," 'consult-buffer-smart
-    "." 'find-file-smart))
+    "." 'find-file-smart)
+  :init
+  (projectile-mode +1))

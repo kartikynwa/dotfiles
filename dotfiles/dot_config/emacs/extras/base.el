@@ -22,9 +22,9 @@
 (use-package avy
   :ensure t
   :demand t
-  :config
+  :general
   (general-define-key
-    :states '(normal visual)
+    :states '(normal motion)
     "s" 'avy-goto-char-timer))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -33,30 +33,18 @@
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Consult: Misc. enhanced commands
-; (use-package consult
-;   :ensure t
-;   ;; Other good things to bind: consult-line-multi, consult-history,
-;   ;; consult-outline, consult-org-agenda, etc.
-;   :bind (("C-x b" . consult-buffer)  ; orig. switch-to-buffer
-;          ("M-y" . consult-yank-pop)  ; orig. yank-pop
-;          ("M-s r" . consult-ripgrep)
-;          ("C-s" . consult-line))     ; orig. isearch
-;   :config
-;   ;; Narrowing lets you restrict results to certain groups of candidates
-;   (setq consult-narrow-key "<"))
-
 (use-package consult
   :ensure t
   ;; Other good things to bind: consult-line-multi, consult-history,
   ;; consult-outline, consult-org-agenda, etc.
-  :config
+  :general
   (general-define-key
     "C-x b" 'consult-buffer  ; orig. switch-to-buffer
     "M-y" 'consult-yank-pop  ; orig. yank-pop
     "M-s r" 'consult-ripgrep
     "C-s" 'consult-line)     ; orig. isearch
   ;; Narrowing lets you restrict results to certain groups of candidates
+  :config
   (setq consult-narrow-key "<"))
 
 ;; TODO: Figure out what the fuck this package does
@@ -121,16 +109,7 @@
   (corfu-preselect 'prompt)
   (corfu-quit-no-match 'separator)
 
-  :init
-  (global-corfu-mode)
-  ;; corfu-map needs to take precedence over evil-insert-state-map otherwise
-  ;; keybindings don't work
-  (evil-make-overriding-map corfu-map)
-  (advice-add 'corfu--setup :after 'evil-normalize-keymaps)
-  (advice-add 'corfu--teardown :after 'evil-normalize-keymaps)
-
-  :config
-  ;; Using tab-and-go config from project's README
+  :general
   (general-define-key :keymaps 'corfu-map
     "C-j" 'corfu-next
     "C-n" 'corfu-next
@@ -139,8 +118,15 @@
     "C-k" 'corfu-previous
     "C-p" 'corfu-previous
     "S-TAB" 'corfu-previous
-    [backtab] 'corfu-previous
-  ))
+    [backtab] 'corfu-previous)
+
+  :init
+  (global-corfu-mode)
+  ;; corfu-map needs to take precedence over evil-insert-state-map otherwise
+  ;; keybindings don't work
+  (evil-make-overriding-map corfu-map)
+  (advice-add 'corfu--setup :after 'evil-normalize-keymaps)
+  (advice-add 'corfu--teardown :after 'evil-normalize-keymaps))
 
 ;; Part of corfu
 (use-package corfu-popupinfo

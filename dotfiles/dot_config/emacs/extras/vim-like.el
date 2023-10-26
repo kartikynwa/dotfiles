@@ -35,30 +35,38 @@
 
 (use-package evil-collection
   :ensure t
-  :after evil
+  :after (evil)
   :config
   (evil-collection-init))
 
 ;; General for managing keybindings
 (use-package general
-  :ensure t
-  :demand t
-  :after (evil eglot)
+  :ensure t :demand t
+  :after (evil)
   :config
-  (evil-general-setup))
-
-(defun evil-general-setup ()
-  "Perform basic general.el setup for evil-mode"
   (general-define-key :states '(normal motion)
       "H" 'tab-previous
       "L" 'tab-next)
-  (general-create-definer tyrant-def
+  ;; Basic leader prefix
+  (general-create-definer leader-def
     :states '(normal insert motion emacs)
     :prefix "SPC"
     :non-normal-prefix "M-SPC"
-    :prefix-command 'tyrant-prefix
-    :prefix-map 'tyrant-prefix-map)
-  (tyrant-def
+    :prefix-command 'leader-prefix
+    :prefix-map 'leader-prefix-map)
+  (leader-def
     "h" '(:keymap help-map :wk "help")
     "f" 'find-file
-    "b" 'consult-buffer))
+    "b" 'consult-buffer)
+  ;; Prefix for lsp, formatting, etc. based commands
+  (general-create-definer lang-prefix-def
+    :states '(normal insert motion emacs)
+    :prefix "SPC l"
+    :non-normal-prefix "M-SPC l"
+    :prefix-command 'lang-prefix
+    :prefix-map 'lang-prefix-map)
+  (lang-prefix-def
+    "" '(nil :wk "lang"))
+)
+
+(elpaca-wait)
