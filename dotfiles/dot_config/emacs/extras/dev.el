@@ -70,6 +70,12 @@
 ;; built in, you're almost certain to find a mode for the language you're
 ;; looking for with a quick Internet search.
 
+(use-package go-mode
+  :ensure t
+  :commands (go-mode)
+  :general
+  (lang-prefix-def :keymaps 'go-mode-map "f" 'gofmt))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;;   Eglot, the built-in LSP client for Emacs

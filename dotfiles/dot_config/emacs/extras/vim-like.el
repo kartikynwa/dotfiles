@@ -57,7 +57,21 @@
   (leader-def
     "h" '(:keymap help-map :wk "help")
     "f" 'find-file
-    "b" 'consult-buffer)
+    ;; Buffer prefix
+    "b" '(nil :wk "buffer")
+    "bb" 'consult-buffer
+    "bn" 'next-buffer
+    "bp" 'previous-buffer
+    "bd" 'kill-this-buffer
+    "bs" 'scratch-buffer
+    ;; Tab prefix
+    "t" '(nil :wk "tab")
+    "tt" 'tab-new
+    "tn" 'tab-next
+    "tp" 'tab-previous
+    "tq" 'tab-close
+    ;;
+    "w" '(:keymap evil-window-map :wk "window"))
   ;; Prefix for lsp, formatting, etc. based commands
   (general-create-definer lang-prefix-def
     :states '(normal insert motion emacs)
@@ -66,7 +80,6 @@
     :prefix-command 'lang-prefix
     :prefix-map 'lang-prefix-map)
   (lang-prefix-def
-    "" '(nil :wk "lang"))
+    "" '(nil :wk "language"))
 )
-
 (elpaca-wait)

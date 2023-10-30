@@ -179,7 +179,8 @@ If the new path's directories does not exist, create them."
 ;; We won't set these, but they're good to know about
 ;;
 ;; (setq-default indent-tabs-mode nil)
-;; (setq-default tab-width 4)
+
+(setq-default tab-width 2)
 
 ;; Misc. UI tweaks
 (blink-cursor-mode -1)                                ; Steady cursor
@@ -229,7 +230,7 @@ If the new path's directories does not exist, create them."
 (set-frame-font "JetBrainsMono Nerd Font 12" nil t)
 
 (use-package stimmung-themes
-  :ensure t
+  :ensure t :demand t
   :init
   (stimmung-themes-load-light)
   :custom
