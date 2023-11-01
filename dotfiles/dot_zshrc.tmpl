@@ -7,8 +7,12 @@ HISTFILE=~/.config/zsh.d/history
 HISTSIZE=1000
 SAVEHIST=1000
 
+# GOPATH
+export GOPATH="$HOME/.local/share/go"
+[ -d "$GOPATH/bin" ] && export PATH="$GOPATH/bin:$PATH"
+
 # PATH
-PATH="$HOME/.local/bin:{{ .chezmoi.workingTree }}/scripts/utils:$PATH"
+export PATH="$HOME/.local/bin:{{ .chezmoi.workingTree }}/scripts/utils:$PATH"
 
 # add to fpath
 fpath=("${HOME}/.config/zsh.d" $fpath)
