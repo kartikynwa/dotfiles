@@ -231,19 +231,27 @@ If the new path's directories does not exist, create them."
 
 (use-package stimmung-themes
   :ensure t :demand t
-  :init
-  (stimmung-themes-load-light)
+
   :custom
   (stimmung-themes-constant 'none)
   (stimmung-themes-type 'none :italic? t)
   (stimmung-themes-comment 'foreground)
   (column-number-mode t)
   (mode-line-percent-position nil)
+
   :config 
   (setq-default mode-line-format (delq 'mode-line-modes mode-line-format))
   (advice-add 'vc-git-mode-line-string :override (lambda (file) ""))
   (set-face-attribute 'mode-line-inactive nil :box '(:line-width 2 :color "gray95"))
   (set-face-attribute 'mode-line nil :box '(:line-width 2 :color "gray80")))
+
+(use-package theme-changer
+  :ensure t
+  :custom
+  (calendar-latitude 26.85)
+  (calendar-longitude 80.95)
+  :config
+  (change-theme 'stimmung-themes-light 'stimmung-themes-dark))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;

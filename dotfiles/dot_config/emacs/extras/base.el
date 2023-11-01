@@ -170,8 +170,9 @@
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Modify search results en masse
-(use-package wgrep
+(use-package smartparens
   :ensure t
+  :commands (smartparens-mode)
+  :hook (prog-mode text-mode markdown-mode) ;; add `smartparens-mode` to these hooks
   :config
-  (setq wgrep-auto-save-buffer t))
+  (require 'smartparens-config)) ;; load default config
