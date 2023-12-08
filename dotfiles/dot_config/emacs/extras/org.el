@@ -143,27 +143,15 @@
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package org-roam
+;; These variables are needed for Denote
+(setopt denote-directory (expand-file-name "~/docs/org-mode/notes"))
+(use-package denote
   :ensure t
   :config
-  (org-roam-db-autosync-mode)
-  ;; Dedicated side window for backlinks
-  (add-to-list 'display-buffer-alist
-               '("\\*org-roam\\*"
-                 (display-buffer-in-side-window)
-                 (side . right)
-                 (window-width . 0.4)
-                 (window-height . fit-window-to-buffer))))
-
-;; Pretty web interface for org-roam
-;(use-package org-roam-ui
-;  :ensure t
-;  :after org-roam
-;  :config
-;  (setq org-roam-ui-sync-theme t
-;        org-roam-ui-follow t
-;        org-roam-ui-update-on-save t
-;        org-roam-ui-open-on-start t))
+  ;; Accept any symbol in a .dir-locals.el file; makes it easier to use silos.
+  ;; See "silos" in the manual: https://protesilaos.com/emacs/denote
+  (put 'denote-file-type 'safe-local-variable-p 'symbolp)
+  )
 
 (use-package olivetti
   :ensure t

@@ -156,7 +156,12 @@
 
 (use-package eshell
   :elpaca nil
-  :bind (("C-r" . consult-history)))
+  :init
+  (defun bedrock/setup-eshell ()
+    ;; Something funny is going on with how Eshell sets up its keymaps; this is
+    ;; a work-around to make C-r bound in the keymap
+    (keymap-set eshell-mode-map "C-r" 'consult-history))
+  :hook ((eshell-mode . bedrock/setup-eshell)))
 
 ;; Orderless: powerful completion style
 (use-package orderless

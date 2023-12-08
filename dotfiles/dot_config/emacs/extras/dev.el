@@ -88,6 +88,7 @@
 
   :custom
   (eglot-send-changes-idle-time 0.1)
+  (eglot-extend-to-xref t)
 
   :general
   (lang-prefix-def "l" 'eglot)
