@@ -253,6 +253,7 @@ If the new path's directories does not exist, create them."
 (use-package theme-changer
   :ensure t
   :custom
+  (theme-changer-delay-seconds -3600)
   (calendar-latitude 26.85)
   (calendar-longitude 80.95)
   :config
