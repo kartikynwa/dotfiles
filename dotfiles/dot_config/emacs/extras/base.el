@@ -121,12 +121,7 @@
     [backtab] 'corfu-previous)
 
   :init
-  (global-corfu-mode)
-  ;; corfu-map needs to take precedence over evil-insert-state-map otherwise
-  ;; keybindings don't work
-  (evil-make-overriding-map corfu-map)
-  (advice-add 'corfu--setup :after 'evil-normalize-keymaps)
-  (advice-add 'corfu--teardown :after 'evil-normalize-keymaps))
+  (global-corfu-mode))
 
 ;; Part of corfu
 (use-package corfu-popupinfo
