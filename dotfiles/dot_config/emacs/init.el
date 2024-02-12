@@ -73,6 +73,12 @@
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(use-package exec-path-from-shell
+  :ensure t :demand t
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
+
 ;; If you want to turn off the welcome screen, uncomment this
 (setq inhibit-splash-screen t)
 
