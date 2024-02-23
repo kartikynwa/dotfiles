@@ -240,21 +240,7 @@ If the new path's directories does not exist, create them."
 
 (set-frame-font "JetBrainsMono Nerd Font 12" nil t)
 
-(use-package stimmung-themes
-  :ensure t :demand t
-
-  :custom
-  (stimmung-themes-constant 'none)
-  (stimmung-themes-type 'none :italic? t)
-  (stimmung-themes-comment 'foreground)
-  (column-number-mode t)
-  (mode-line-percent-position nil)
-
-  :config 
-  (setq-default mode-line-format (delq 'mode-line-modes mode-line-format))
-  (advice-add 'vc-git-mode-line-string :override (lambda (file) ""))
-  (set-face-attribute 'mode-line-inactive nil :box '(:line-width 2 :color "gray95"))
-  (set-face-attribute 'mode-line nil :box '(:line-width 2 :color "gray80")))
+(use-package gruvbox-theme :ensure t)
 
 (use-package theme-changer
   :ensure t
@@ -263,7 +249,8 @@ If the new path's directories does not exist, create them."
   (calendar-latitude 26.85)
   (calendar-longitude 80.95)
   :config
-  (change-theme 'stimmung-themes-light 'stimmung-themes-dark))
+  ; (change-theme 'stimmung-themes-light 'stimmung-themes-dark))
+  (change-theme 'gruvbox-light-soft 'gruvbox-dark-hard))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
