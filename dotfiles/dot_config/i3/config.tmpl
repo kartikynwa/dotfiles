@@ -27,6 +27,9 @@ bindsym $mod+Shift+n exec --no-startup-id xrandr \
           --output $LAPTOP_MONITOR --off && \
           {{ .chezmoi.workingTree }}/scripts/utils/wall.sh
 
+# Change pipewire audio sink with the press of a button (three buttons)
+bindsym $mod+Shift+a exec --no-startup-id {{ .chezmoi.workingTree }}/scripts/utils/change_pipewire_audio_sink.py
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
