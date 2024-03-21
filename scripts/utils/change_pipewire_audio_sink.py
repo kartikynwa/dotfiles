@@ -6,11 +6,17 @@ import sys
 
 
 NOTIFY_ID = "92835743"
+DEVICES = {}
 
 
 def manipulate_device(device_id: int, enable: bool):
+    """Call `wpctl set-profile {device_id} {profile_index}`.
+
+    profile_index will be the index of the profile with the maximum "priority" if `enabled`
+    is True, otherwise it will be that of the profile witht the minimum "priority".
+    """
     profile_key = ("on" if enable else "off") + "_profile"
-    index = devices[device_id][profile_key]["index"]
+    index = DEVICES[device_id][profile_key]["index"]
     subprocess.run(["wpctl", "set-profile", str(device_id), str(index)])
 
 
@@ -24,24 +30,24 @@ try:
     out = subprocess.run("pw-dump", capture_output=True)
     dump = json.loads(str(out.stdout.decode()))
 
-    devices = {}
+    # Filter out `Audio/Devices` and store them in DEVICES
     for node in dump:
         if (
             node["type"] == "PipeWire:Interface:Device"
             and node["info"]["props"].get("media.class", "") == "Audio/Device"
         ):
             profiles = node["info"]["params"]["EnumProfile"]
+            # Seems like the "Off" profile always have 0 priority. The highest priority profiles
+            # seem to be sane defaults for the devices I have at hand.
             off_profile = min(profiles, key=lambda p: p["priority"])
             on_profile = max(profiles, key=lambda p: p["priority"])
             node["off_profile"] = off_profile
             node["on_profile"] = on_profile
-            devices[node["id"]] = node
+            node["description"] = node["info"]["props"]["device.description"]
+            DEVICES[node["id"]] = node
 
     rofi_input = "\n".join(
-        [
-            str(id) + ":" + device["info"]["props"]["device.description"]
-            for id, device in devices.items()
-        ]
+        [f"{id}:{device['description']}" for id, device in DEVICES.items()]
     )
     if not rofi_input:
         notify("No available devices")
@@ -60,14 +66,14 @@ try:
 
     selected_device_id = int(rofi_output.split(":")[0])
 
+    # First, enable the device that was selected
     manipulate_device(selected_device_id, True)
-    for device_id in devices:
+    # Then, disable the devices that were not selected
+    for device_id in DEVICES:
         if device_id != selected_device_id:
             manipulate_device(device_id, False)
 
-    notify(
-        devices[selected_device_id]["info"]["props"]["device.description"] + " selected"
-    )
+    notify(f'"{DEVICES[selected_device_id]["description"]}" selected')
 
 except Exception as e:
     notify(f"Error: {e}")
