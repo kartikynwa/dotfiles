@@ -77,10 +77,10 @@
   (lang-prefix-def :keymaps 'go-mode-map "f" 'gofmt))
 
 (use-package rust-mode
-  :ensure t
-  :commands (rust-mode)
-  :general
-  (lang-prefix-def :keymaps 'rust-mode-map "f" 'eglot-format))
+  :ensure t)
+;;   :commands (rust-mode)
+;;   :general
+;;   (lang-prefix-def :keymaps 'rust-mode-map "f" 'eglot-format))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -90,7 +90,7 @@
 
 
 (use-package eglot
-  :elpaca nil
+  :ensure nil
 
   :custom
   (eglot-send-changes-idle-time 0.1)

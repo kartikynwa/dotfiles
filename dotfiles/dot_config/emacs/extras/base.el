@@ -90,7 +90,7 @@
   (vertico-mode))
 
 (use-package vertico-directory
-  :elpaca nil
+  :ensure nil
   :after vertico)
 
 ;; Marginalia: annotations for minibuffer
@@ -125,7 +125,7 @@
 
 ;; Part of corfu
 (use-package corfu-popupinfo
-  :elpaca nil
+  :ensure nil
   :after corfu
   :hook (corfu-mode . corfu-popupinfo-mode)
   :custom
@@ -150,7 +150,7 @@
   (add-to-list 'completion-at-point-functions #'cape-file))
 
 (use-package eshell
-  :elpaca nil
+  :ensure nil
   :init
   (defun bedrock/setup-eshell ()
     ;; Something funny is going on with how Eshell sets up its keymaps; this is

@@ -90,7 +90,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package org
-  :elpaca nil
+  :ensure nil
   :hook ((org-mode . visual-line-mode)  ; wrap lines at word breaks
          (org-mode . flyspell-mode))    ; spell checking!
 
