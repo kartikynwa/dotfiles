@@ -108,6 +108,11 @@
   :config
   (fset #'jsonrpc--log-event #'ignore)) ; massive perf boost---don't log every event
 
+;; (use-package eglot-booster
+;;   :ensure (:host github :repo "jdtsmith/eglot-booster")
+;;   :after eglot
+;;   :config (eglot-booster-mode))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;;   Utilities
