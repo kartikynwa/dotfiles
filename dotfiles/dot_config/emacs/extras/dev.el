@@ -26,6 +26,14 @@
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(use-package treesit-auto
+  :ensure t
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist '(javascript typescript))
+  (global-treesit-auto-mode))
+
 (use-package markdown-mode
   :commands (markdown-mode)
   :hook ((markdown-mode . visual-line-mode)))
@@ -39,6 +47,8 @@
   :ensure t)
 
 (use-package web-mode
+  :ensure t
+
   :mode
   "\\.html\\'"
   "\\.html.erb\\'"
@@ -49,7 +59,7 @@
   "\\.erb\\'"
   "\\.mustache\\'"
   "\\.djhtml\\'"
-  "\\.jsx?\\'"
+  ;; "\\.jsx?\\'"
 
   :custom
   (web-mode-code-indent-offset 2)
@@ -58,13 +68,11 @@
   (web-mode-attr-indent-offset 2)
   (web-mode-sql-indent-offset 2)
 
-  :commands (web-mode))
+  :init
+  (define-derived-mode web-mode-svelte web-mode "Svelte")
+  (add-to-list 'auto-mode-alist '("\\.svelte\\'" . web-mode-svelte))
 
-(use-package blacken
-  :ensure t
-  :commands (blacken-buffer blacken-mode)
-  :general
-  (lang-prefix-def :keymaps 'python-mode-map "f" 'blacken-buffer))
+  :commands (web-mode))
 
 ;; Emacs ships with a lot of popular programming language modes. If it's not
 ;; built in, you're almost certain to find a mode for the language you're
@@ -72,15 +80,15 @@
 
 (use-package go-mode
   :ensure t
-  :commands (go-mode)
-  :general
-  (lang-prefix-def :keymaps 'go-mode-map "f" 'gofmt))
+  :commands (go-mode))
 
 (use-package rust-mode
   :ensure t)
-;;   :commands (rust-mode)
-;;   :general
-;;   (lang-prefix-def :keymaps 'rust-mode-map "f" 'eglot-format))
+
+(use-package apheleia
+  :ensure t
+  :config
+  (apheleia-global-mode +1))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -106,6 +114,7 @@
     "Q" 'eglot-shutdown-all)
 
   :config
+  (add-to-list 'eglot-server-programs '(web-mode-svelte . ("svelteserver" "--stdio")))
   (fset #'jsonrpc--log-event #'ignore)) ; massive perf boost---don't log every event
 
 ;; (use-package eglot-booster
