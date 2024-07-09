@@ -252,7 +252,7 @@ If the new path's directories does not exist, create them."
   (calendar-longitude 80.95)
   :config
   ; (change-theme 'stimmung-themes-light 'stimmung-themes-dark))
-  (change-theme 'gruvbox-light-soft 'gruvbox-dark-hard))
+  (change-theme 'gruvbox-dark-medium 'gruvbox-dark-medium))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
