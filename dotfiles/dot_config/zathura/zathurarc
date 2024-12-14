@@ -1,3 +1,5 @@
+set database "sqlite"
+
 set window-title-basename true
 
 set guioptions ""
