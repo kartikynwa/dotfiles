@@ -117,13 +117,25 @@
 ;; Corfu: Popup completion-at-point
 (use-package corfu
   :ensure t
+  :custom
+  (corfu-auto t)
+  (corfu-auto-prefix 3)
+  (corfu-preview-current nil)
+  (corfu-preselect 'prompt)
   :init
   (global-corfu-mode)
+  :config
+  (keymap-unset corfu-map "RET")
+  (keymap-unset corfu-map "ESC")
   :bind
   (:map corfu-map
+	("C-SPC" . corfu-complete)
+	("ESC" . corfu-quit)
         ("SPC" . corfu-insert-separator)
-        ("C-n" . corfu-next)
-        ("C-p" . corfu-previous)))
+        ("TAB" . corfu-next)
+	([tab] . corfu-next)
+	("S-TAB" . corfu-previous)
+        ([backtab] . corfu-previous)))
 
 ;; Part of corfu
 (use-package corfu-popupinfo

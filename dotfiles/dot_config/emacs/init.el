@@ -207,7 +207,7 @@ If the new path's directories does not exist, create them."
 (pixel-scroll-precision-mode)                         ; Smooth scrolling
 
 ;; Use common keystrokes by default
-(cua-mode)
+; (cua-mode)
 
 ;; Display line numbers in programming mode
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
@@ -243,6 +243,14 @@ If the new path's directories does not exist, create them."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package emacs
+  :custom
+  (help-window-select t)                ; Switch to help buffers automatically
+  (tab-always-indent 'complete)
+  (read-extended-command-predicate #'command-completion-default-include-p)
+  (text-mode-ispell-word-completion nil)
+  :bind
+  ("C-z" . undo)
+  ("C-S-z" . undo-redo)
   :config
   (load-theme 'modus-vivendi))          ; for light theme, use modus-operandi
 
@@ -293,7 +301,6 @@ If the new path's directories does not exist, create them."
  ;; If there is more than one, they won't work right.
  '(blink-cursor-mode nil)
  '(column-number-mode t)
- '(cua-mode t)
  '(display-time-mode t)
  '(package-selected-packages '(which-key))
  '(tab-bar-mode t)
