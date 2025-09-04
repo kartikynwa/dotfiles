@@ -1,7 +1,0 @@
-configuration {
-	lines: 10;
-	font: "DejaVu Sans Mono 14";
-	matching: "regex";
-}
-
-@theme "gruvbox-dark-flat.rasi"
