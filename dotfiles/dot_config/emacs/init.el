@@ -168,7 +168,7 @@ If the new path's directories does not exist, create them."
 (setopt completion-auto-select 'second-tab)            ; Much more eager
 ;(setopt completion-auto-select t)                     ; See `C-h v completion-auto-select' for more possible values
 
-(keymap-set minibuffer-mode-map "TAB" 'minibuffer-complete) ; TAB acts more like how it does in the shell
+; (keymap-set minibuffer-mode-map "TAB" 'minibuffer-complete) ; TAB acts more like how it does in the shell
 
 ;; For a fancier built-in completion option, try ido-mode,
 ;; icomplete-vertical, or fido-mode. See also the file extras/base.el
@@ -183,6 +183,8 @@ If the new path's directories does not exist, create them."
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(setopt fill-column 100)
+
 ;; Mode line information
 (setopt line-number-mode t)                        ; Show current line in modeline
 (setopt column-number-mode t)                      ; Show column as well
@@ -196,6 +198,7 @@ If the new path's directories does not exist, create them."
 ;; Enable horizontal scrolling
 (setopt mouse-wheel-tilt-scroll t)
 (setopt mouse-wheel-flip-direction t)
+(set-window-scroll-bars (minibuffer-window) nil nil nil nil 1)
 
 ;; We won't set these, but they're good to know about
 ;;
@@ -250,10 +253,12 @@ If the new path's directories does not exist, create them."
   (text-mode-ispell-word-completion nil)
   :bind
   ("C-z" . undo)
-  ("C-S-z" . undo-redo)
-  :config
-  (load-theme 'modus-vivendi))          ; for light theme, use modus-operandi
+  ("C-S-z" . undo-redo))
 
+(use-package kaolin-themes
+  :ensure t
+  :config
+  (load-theme 'kaolin-galaxy))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;;   Optional extras
@@ -263,15 +268,15 @@ If the new path's directories does not exist, create them."
 ;; Uncomment the (load-file …) lines or copy code from the extras/ elisp files
 ;; as desired
 
+;; Vim-bindings in Emacs (evil-mode configuration)
+(load-file (expand-file-name "extras/vim-like.el" user-emacs-directory))
+
 ;; UI/UX enhancements mostly focused on minibuffer and autocompletion interfaces
 ;; These ones are *strongly* recommended!
 (load-file (expand-file-name "extras/base.el" user-emacs-directory))
 
 ;; Packages for software development
-;(load-file (expand-file-name "extras/dev.el" user-emacs-directory))
-
-;; Vim-bindings in Emacs (evil-mode configuration)
-; (load-file (expand-file-name "extras/vim-like.el" user-emacs-directory))
+(load-file (expand-file-name "extras/dev.el" user-emacs-directory))
 
 (load-file (expand-file-name "extras/anki.el" user-emacs-directory))
 
@@ -301,6 +306,10 @@ If the new path's directories does not exist, create them."
  ;; If there is more than one, they won't work right.
  '(blink-cursor-mode nil)
  '(column-number-mode t)
+ '(custom-safe-themes
+   '("5291b60ee27dfc12078f787929498ce82efe5e4d42decdbb994be80cdb2def1f"
+     "daa27dcbe26a280a9425ee90dc7458d85bd540482b93e9fa94d4f43327128077"
+     default))
  '(display-time-mode t)
  '(package-selected-packages '(which-key))
  '(tab-bar-mode t)
@@ -310,6 +319,6 @@ If the new path's directories does not exist, create them."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "RecMonoSmCasual Nerd Font" :foundry "ARRW" :slant normal :weight regular :height 120 :width normal)))))
+ '(default ((t (:family "JetBrainsMono Nerd Font" :foundry "JB" :slant normal :weight regular :height 128 :width normal)))))
 
 (setq gc-cons-threshold (or bedrock--initial-gc-threshold 800000))

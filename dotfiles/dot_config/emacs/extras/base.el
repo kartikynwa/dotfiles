@@ -32,7 +32,9 @@
   :ensure t
   :demand t
   :bind (("C-c j" . avy-goto-line)
-         ("s-j"   . avy-goto-char-timer)))
+         ("s-j"   . avy-goto-char-timer)
+         :map evil-normal-state-map
+         ("g w" . avy-goto-char-2)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -130,6 +132,7 @@
   :bind
   (:map corfu-map
 	("C-SPC" . corfu-complete)
+	("RET" . corfu-complete)
 	("ESC" . corfu-quit)
         ("SPC" . corfu-insert-separator)
         ("TAB" . corfu-next)
@@ -160,16 +163,16 @@
 (use-package cape
   :ensure t
   :init
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  ; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file))
 
 ;; Pretty icons for corfu
-(use-package kind-icon
-  :if (display-graphic-p)
-  :ensure t
-  :after corfu
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+;; (use-package kind-icon
+;;   :if (display-graphic-p)
+;;   :ensure t
+;;   :after corfu
+;;   :config
+;;   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 (use-package eshell
   :init

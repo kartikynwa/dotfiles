@@ -52,8 +52,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Magit: best Git client to ever exist
+(use-package transient :ensure t)
 (use-package magit
   :ensure t
+  :after transient
   :bind (("C-x g" . magit-status)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -63,6 +65,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package markdown-mode
+  :ensure t
   :hook ((markdown-mode . visual-line-mode)))
 
 (use-package yaml-mode
