@@ -1,3 +1,0 @@
-#!/usr/bin/env zsh
-[ -f $HOME/.zshrc ] && source $HOME/.zshrc
-rofi -show run
