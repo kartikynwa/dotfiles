@@ -1,6 +1,7 @@
 ﻿set -x EDITOR helix
 abbr -a hx helix
 abbr -a vim nvim
+abbr -a c chezmoi
 
 # Format man pages
 set -x MANROFFOPT -c
