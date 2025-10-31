@@ -107,3 +107,9 @@ abbr -a jctl journalctl -p 3 -xb
 
 # Recent installed packages
 abbr -a rip "expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
+
+# Rustup
+set -x RUSTUP_HOME ~/.local/share/rustup
+
+bind alt-backspace backward-kill-word
+bind ctrl-backspace backward-kill-token
