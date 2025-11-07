@@ -109,8 +109,10 @@ abbr -a jctl journalctl -p 3 -xb
 # Recent installed packages
 abbr -a rip "expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 
-# Rustup
+# Stay out of my goddamn $HOME
 set -x RUSTUP_HOME ~/.local/share/rustup
+set -x GOPATH ~/.local/share/go
+set -x GPODDER_HOME ~/.local/share/gPodder
 
 bind alt-backspace backward-kill-word
 bind ctrl-backspace backward-kill-token
