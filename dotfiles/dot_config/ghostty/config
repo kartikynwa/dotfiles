@@ -9,3 +9,4 @@ keybind = alt+shift+-=new_split:down
 keybind = alt+shift+h=previous_tab
 keybind = alt+shift+l=next_tab
 keybind = ctrl+tab=last_tab
+keybind = alt+shift+t=new_tab
