@@ -1,0 +1,11 @@
+theme = Gruvbox Material
+
+keybind = alt+l=goto_split:right
+keybind = alt+h=goto_split:left
+keybind = alt+k=goto_split:up
+keybind = alt+j=goto_split:down
+keybind = alt+shift+\=new_split:right
+keybind = alt+shift+-=new_split:down
+keybind = alt+shift+h=previous_tab
+keybind = alt+shift+l=next_tab
+keybind = ctrl+tab=last_tab
