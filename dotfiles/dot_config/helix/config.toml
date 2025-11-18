@@ -12,6 +12,9 @@ select = "underline"
 render = true
 character = "┊"
 
+[editor.soft-wrap]
+enable = true
+
 [keys.normal]
 "a" = ["append_mode", "collapse_selection"]
 "space" = { "c" = { "o" = ":config-open", "r" = ":config-reload" } }
