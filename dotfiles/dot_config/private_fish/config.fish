@@ -59,7 +59,7 @@ else
 end
 
 # Fish command history
-function history
+function hist
     builtin history --show-time='%F %T '
 end
 
