@@ -40,3 +40,9 @@
   :config
   (setq evil-want-integration t)
   (evil-collection-init))
+
+(use-package evil-surround
+  :ensure t
+  :after evil
+  :config
+  (global-evil-surround-mode))
