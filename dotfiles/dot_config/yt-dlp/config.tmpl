@@ -1,3 +1,4 @@
+{{ if eq .chezmoi.hostname "ksodroid" }}
 --sub-langs "en,en-US,en-GB,hi"
 --write-auto-subs
 --merge-output-format mkv
@@ -6,3 +7,4 @@
 --sponsorblock-remove sponsor
 --format 'bestvideo[height<=1080][fps>=50]+bestaudio/bestvideo[height<=1080]+bestaudio/best'
 --merge-output-format mkv
+{{ end }}
