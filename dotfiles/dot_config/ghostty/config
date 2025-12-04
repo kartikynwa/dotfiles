@@ -1,4 +1,5 @@
-theme = Gruvbox Material
+# theme = Gruvbox Material
+theme = 0x96f
 
 keybind = alt+l=goto_split:right
 keybind = alt+h=goto_split:left
