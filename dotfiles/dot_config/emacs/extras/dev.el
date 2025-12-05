@@ -64,11 +64,9 @@
   :ensure t
   :hook ((markdown-mode . visual-line-mode)))
 
-(use-package yaml-mode
-  :ensure t)
+(use-package yaml-mode :ensure t)
 
-(use-package json-mode
-  :ensure t)
+(use-package json-mode :ensure t)
 
 ;; Emacs ships with a lot of popular programming language modes. If it's not
 ;; built in, you're almost certain to find a mode for the language you're
