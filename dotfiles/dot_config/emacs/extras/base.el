@@ -122,7 +122,8 @@
   :custom
   (corfu-auto t)
   (corfu-auto-prefix 3)
-  (corfu-preview-current nil)
+  ; (corfu-preview-current nil)
+  (corfu-cycle t)
   (corfu-preselect 'prompt)
   :init
   (global-corfu-mode)
@@ -132,13 +133,13 @@
   :bind
   (:map corfu-map
 	("C-SPC" . corfu-complete)
-	("RET" . corfu-complete)
+	; ("RET" . corfu-complete)
 	("ESC" . corfu-quit)
-        ("SPC" . corfu-insert-separator)
-        ("TAB" . corfu-next)
+    ; ("M-SPC" . corfu-insert-separator)
+    ("TAB" . corfu-next)
 	([tab] . corfu-next)
 	("S-TAB" . corfu-previous)
-        ([backtab] . corfu-previous)))
+    ([backtab] . corfu-previous)))
 
 ;; Part of corfu
 (use-package corfu-popupinfo
@@ -195,16 +196,4 @@
 (use-package orderless
   :ensure t
   :config
-  (setq completion-styles '(orderless)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;
-;;;   Misc. editing enhancements
-;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Modify search results en masse
-(use-package wgrep
-  :ensure t
-  :config
-  (setq wgrep-auto-save-buffer t))
+  (setq completion-styles '(orderless basic)))
